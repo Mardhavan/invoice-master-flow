@@ -330,8 +330,24 @@ const InvoiceEditor = () => {
       return;
     }
 
+    // Save to history automatically
+    const saved = localStorage.getItem("invoiceHistory");
+    const history = saved ? JSON.parse(saved) : [];
+    
+    const invoice = {
+      id: Date.now().toString(),
+      invoiceNumber: invoiceData.invoiceNumber,
+      clientName: invoiceData.clientName,
+      date: invoiceData.date,
+      total: calculateTotal(),
+      data: invoiceData
+    };
+
+    history.unshift(invoice);
+    localStorage.setItem("invoiceHistory", JSON.stringify(history));
+
     setIsGenerated(true);
-    toast.success("Invoice generated successfully!");
+    toast.success("Invoice generated and saved!");
     
     // Scroll to preview
     setTimeout(() => {
