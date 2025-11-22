@@ -877,21 +877,21 @@ const InvoiceEditor = () => {
                 transition={{ delay: 0.2 }}
                 className="lg:sticky lg:top-8 h-fit"
               >
-            <Card className="bg-zinc-900/50 backdrop-blur-xl border-cyan-500/20 p-4 shadow-[0_0_40px_rgba(34,211,238,0.15)]">
-              <div className="mb-3 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <FiFileText className="h-5 w-5 text-cyan-400" />
-                  <h3 className="text-sm font-semibold text-white">Live Preview</h3>
-                </div>
-                <div className="flex gap-1">
-                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                  <div className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse" style={{ animationDelay: '0.2s' }} />
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" style={{ animationDelay: '0.4s' }} />
-                </div>
-              </div>
-              
-              <div id="invoice-preview" className="bg-zinc-950/90 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden border border-cyan-500/10">
-                <div className="p-8 space-y-8">
+                <Card className="bg-zinc-900/50 backdrop-blur-xl border-cyan-500/20 p-4 shadow-[0_0_40px_rgba(34,211,238,0.15)]">
+                  <div className="mb-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <FiFileText className="h-5 w-5 text-cyan-400" />
+                      <h3 className="text-sm font-semibold text-white">Live Preview</h3>
+                    </div>
+                    <div className="flex gap-1">
+                      <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                      <div className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse" style={{ animationDelay: '0.2s' }} />
+                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" style={{ animationDelay: '0.4s' }} />
+                    </div>
+                  </div>
+                  
+                  <div id="invoice-preview" className="bg-zinc-950/90 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden border border-cyan-500/10">
+                    <div className="p-8 space-y-8">
                   {/* Header with Gradient Border */}
                   <div className="relative pb-6 border-b border-gradient-to-r from-transparent via-cyan-500/50 to-transparent">
                     <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
@@ -1091,16 +1091,16 @@ const InvoiceEditor = () => {
                     </div>
                   )}
 
-                  {/* Footer */}
-                  <div className="pt-6 border-t border-cyan-500/20 text-center">
-                    <p className="text-xs text-zinc-500">
-                      Thank you for your business! • Powered by Apply Wizz
-                    </p>
+                      {/* Footer */}
+                      <div className="pt-6 border-t border-cyan-500/20 text-center">
+                        <p className="text-xs text-zinc-500">
+                          Thank you for your business! • Powered by Apply Wizz
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
+                </Card>
+              </motion.div>
             )}
           </AnimatePresence>
         </div>
