@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { FiPlus, FiTrash2, FiDownload, FiArrowLeft, FiFileText } from "react-icons/fi";
+import { FiPlus, FiTrash2, FiDownload, FiArrowLeft, FiFileText, FiImage, FiCode } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import jsPDF from "jspdf";
@@ -120,45 +120,52 @@ const InvoiceEditor = () => {
     return subtotal + taxAmount - discountAmount;
   };
 
-  const exportToPDF = async () => {
+  const prepareInvoiceForExport = () => {
     const element = document.getElementById("invoice-preview");
-    if (!element) return;
+    if (!element) return null;
 
+    const clone = element.cloneNode(true) as HTMLElement;
+    clone.style.position = "absolute";
+    clone.style.left = "-9999px";
+    clone.style.top = "0";
+    clone.style.width = "210mm";
+    clone.style.maxWidth = "210mm";
+    clone.style.padding = "20mm";
+    clone.style.boxSizing = "border-box";
+    document.body.appendChild(clone);
+
+    const backgrounds = clone.querySelectorAll('[class*="bg-zinc"], [class*="bg-gradient"]');
+    backgrounds.forEach((el) => {
+      const element = el as HTMLElement;
+      element.style.backgroundColor = '#ffffff';
+      element.style.backgroundImage = 'none';
+    });
+
+    const styledTexts = clone.querySelectorAll('.bg-gradient-to-r, .bg-clip-text, [class*="text-transparent"]');
+    styledTexts.forEach((el) => {
+      const element = el as HTMLElement;
+      element.style.background = 'none';
+      element.style.backgroundImage = 'none';
+      element.style.backgroundClip = 'unset';
+      element.style.webkitBackgroundClip = 'unset';
+      element.style.color = '#000000';
+    });
+
+    const borders = clone.querySelectorAll('[class*="border"]');
+    borders.forEach((el) => {
+      const element = el as HTMLElement;
+      element.style.borderColor = '#e5e7eb';
+    });
+
+    return clone;
+  };
+
+  const exportToPDF = async () => {
     try {
       toast.loading("Generating PDF...", { id: "pdf-export" });
 
-      const clone = element.cloneNode(true) as HTMLElement;
-      clone.style.position = "absolute";
-      clone.style.left = "-9999px";
-      clone.style.top = "0";
-      clone.style.width = "210mm";
-      clone.style.maxWidth = "210mm";
-      clone.style.padding = "20mm";
-      clone.style.boxSizing = "border-box";
-      document.body.appendChild(clone);
-
-      const backgrounds = clone.querySelectorAll('[class*="bg-zinc"], [class*="bg-gradient"]');
-      backgrounds.forEach((el) => {
-        const element = el as HTMLElement;
-        element.style.backgroundColor = '#ffffff';
-        element.style.backgroundImage = 'none';
-      });
-
-      const styledTexts = clone.querySelectorAll('.bg-gradient-to-r, .bg-clip-text, [class*="text-transparent"]');
-      styledTexts.forEach((el) => {
-        const element = el as HTMLElement;
-        element.style.background = 'none';
-        element.style.backgroundImage = 'none';
-        element.style.backgroundClip = 'unset';
-        element.style.webkitBackgroundClip = 'unset';
-        element.style.color = '#000000';
-      });
-
-      const borders = clone.querySelectorAll('[class*="border"]');
-      borders.forEach((el) => {
-        const element = el as HTMLElement;
-        element.style.borderColor = '#e5e7eb';
-      });
+      const clone = prepareInvoiceForExport();
+      if (!clone) return;
 
       await new Promise(resolve => setTimeout(resolve, 200));
 
@@ -209,6 +216,96 @@ const InvoiceEditor = () => {
     } catch (error) {
       console.error("PDF Export Error:", error);
       toast.error("Failed to export PDF", { id: "pdf-export" });
+    }
+  };
+
+  const exportToImage = async () => {
+    try {
+      toast.loading("Generating image...", { id: "image-export" });
+
+      const clone = prepareInvoiceForExport();
+      if (!clone) return;
+
+      await new Promise(resolve => setTimeout(resolve, 200));
+
+      const canvas = await html2canvas(clone, {
+        scale: 3,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+        width: 794,
+        windowWidth: 794,
+      });
+
+      document.body.removeChild(clone);
+
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.download = `${invoiceData.invoiceNumber}.png`;
+          link.href = url;
+          link.click();
+          URL.revokeObjectURL(url);
+          toast.success("Image exported successfully!", { id: "image-export" });
+        }
+      }, 'image/png');
+    } catch (error) {
+      console.error("Image Export Error:", error);
+      toast.error("Failed to export image", { id: "image-export" });
+    }
+  };
+
+  const exportToHTML = () => {
+    try {
+      toast.loading("Generating HTML...", { id: "html-export" });
+
+      const element = document.getElementById("invoice-preview");
+      if (!element) return;
+
+      const clone = element.cloneNode(true) as HTMLElement;
+      
+      const htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice ${invoiceData.invoiceNumber}</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #ffffff;
+    }
+    .invoice-container {
+      max-width: 210mm;
+      margin: 0 auto;
+      background: white;
+      padding: 20mm;
+    }
+  </style>
+</head>
+<body>
+  <div class="invoice-container">
+    ${clone.innerHTML}
+  </div>
+</body>
+</html>`;
+
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = `${invoiceData.invoiceNumber}.html`;
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+      
+      toast.success("HTML exported successfully!", { id: "html-export" });
+    } catch (error) {
+      console.error("HTML Export Error:", error);
+      toast.error("Failed to export HTML", { id: "html-export" });
     }
   };
 
@@ -289,15 +386,35 @@ const InvoiceEditor = () => {
                 </div>
               </div>
             </div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button 
-                onClick={exportToPDF}
-                className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] transition-all"
-              >
-                <FiDownload className="mr-2 h-4 w-4" />
-                Export PDF
-              </Button>
-            </motion.div>
+            <div className="flex gap-2">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  onClick={exportToPDF}
+                  className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] transition-all"
+                >
+                  <FiDownload className="mr-2 h-4 w-4" />
+                  PDF
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  onClick={exportToImage}
+                  className="bg-gradient-to-r from-cyan-500/20 to-green-500/20 hover:from-cyan-500/30 hover:to-green-500/30 border border-cyan-500/30 text-cyan-300"
+                >
+                  <FiImage className="mr-2 h-4 w-4" />
+                  Image
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  onClick={exportToHTML}
+                  className="bg-gradient-to-r from-cyan-500/20 to-green-500/20 hover:from-cyan-500/30 hover:to-green-500/30 border border-cyan-500/30 text-cyan-300"
+                >
+                  <FiCode className="mr-2 h-4 w-4" />
+                  HTML
+                </Button>
+              </motion.div>
+            </div>
           </div>
         </div>
       </motion.div>
