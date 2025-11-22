@@ -44,7 +44,6 @@ const InvoiceEditor = () => {
   const getNextInvoiceNumber = () => {
     const lastNumber = localStorage.getItem("lastInvoiceNumber");
     const nextNumber = lastNumber ? parseInt(lastNumber) + 1 : 1001;
-    localStorage.setItem("lastInvoiceNumber", nextNumber.toString());
     return `INV-${nextNumber}`;
   };
 
@@ -345,6 +344,10 @@ const InvoiceEditor = () => {
 
     history.unshift(invoice);
     localStorage.setItem("invoiceHistory", JSON.stringify(history));
+
+    // Persist last used invoice number so the next one is unique
+    const currentNumber = parseInt(invoiceData.invoiceNumber.replace("INV-", "")) || 0;
+    localStorage.setItem("lastInvoiceNumber", currentNumber.toString());
 
     setIsGenerated(true);
     toast.success("Invoice generated and saved!");
