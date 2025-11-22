@@ -221,15 +221,29 @@ const InvoiceEditor = () => {
     }
   };
 
-  const exportToHTML = () => {
+  const exportToHTML = async () => {
     try {
       toast.loading("Generating HTML...", { id: "html-export" });
 
-      const element = document.getElementById("invoice-preview");
-      if (!element) return;
+      const clone = prepareInvoiceForExport();
+      if (!clone) return;
 
-      const clone = element.cloneNode(true) as HTMLElement;
-      
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      const canvas = await html2canvas(clone, {
+        scale: 3,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        backgroundColor: '#0a0a0a',
+        width: 794,
+        windowWidth: 794,
+      });
+
+      document.body.removeChild(clone);
+
+      const imgData = canvas.toDataURL('image/png');
+
       const htmlContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -239,21 +253,25 @@ const InvoiceEditor = () => {
   <style>
     body {
       margin: 0;
-      padding: 20px;
-      font-family: system-ui, -apple-system, sans-serif;
-      background: #ffffff;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
-    .invoice-container {
-      max-width: 210mm;
-      margin: 0 auto;
-      background: white;
-      padding: 20mm;
+    .invoice-wrapper {
+      box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
     }
   </style>
 </head>
 <body>
-  <div class="invoice-container">
-    ${clone.innerHTML}
+  <div class="invoice-wrapper">
+    <img src="${imgData}" alt="Invoice ${invoiceData.invoiceNumber}" />
   </div>
 </body>
 </html>`;
