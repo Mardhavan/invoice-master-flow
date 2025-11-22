@@ -158,41 +158,22 @@ const InvoiceEditor = () => {
 
       document.body.removeChild(clone);
 
+      const pdfWidth = 210; // mm
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
-        format: "a4",
+        format: [pdfWidth, imgHeight],
         compress: true,
       });
 
       const imgData = canvas.toDataURL("image/jpeg", 0.95);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = pdfWidth;
-      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-      // Fill full page background to avoid white gaps
+      // Fill full page with dark background so invoice blends with edges
       pdf.setFillColor(10, 10, 10);
-      pdf.rect(0, 0, pdfWidth, pdfHeight, "F");
-
-      if (imgHeight <= pdfHeight) {
-        pdf.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
-      } else {
-        let heightLeft = imgHeight;
-        let position = 0;
-
-        pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pdfHeight;
-
-        while (heightLeft > 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.setFillColor(10, 10, 10);
-          pdf.rect(0, 0, pdfWidth, pdfHeight, "F");
-          pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
-          heightLeft -= pdfHeight;
-        }
-      }
+      pdf.rect(0, 0, pdfWidth, imgHeight, "F");
+      pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, imgHeight);
 
       pdf.save(`${invoiceData.invoiceNumber}.pdf`);
       toast.success("PDF exported successfully!", { id: "pdf-export" });
