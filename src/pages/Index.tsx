@@ -119,22 +119,34 @@ const Index = () => {
               Create stunning, professional invoices in seconds with our futuristic invoice system
             </motion.p>
 
-            {/* CTA Button */}
+            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="flex gap-4 justify-center"
             >
-              <Button
-                size="lg"
-                onClick={() => navigate("/invoice")}
-                className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white text-lg px-12 py-6 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:shadow-[0_0_50px_rgba(34,211,238,0.6)] transition-all duration-300"
-              >
-                <FiFileText className="mr-2 h-5 w-5" />
-                Create Invoice
-              </Button>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  size="lg"
+                  onClick={() => navigate("/invoice")}
+                  className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white text-lg px-12 py-6 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:shadow-[0_0_50px_rgba(34,211,238,0.6)] transition-all duration-300"
+                >
+                  <FiFileText className="mr-2 h-5 w-5" />
+                  Create Invoice
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  size="lg"
+                  onClick={() => navigate("/history")}
+                  variant="outline"
+                  className="border-cyan-500/30 text-white hover:bg-cyan-500/10 text-lg px-12 py-6 rounded-full"
+                >
+                  <FiClock className="mr-2 h-5 w-5" />
+                  View History
+                </Button>
+              </motion.div>
             </motion.div>
           </motion.div>
 
