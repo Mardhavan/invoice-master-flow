@@ -935,9 +935,9 @@ const InvoiceEditor = () => {
 
                   {/* Bill To with Glow Effect */}
                   <div className="p-5 bg-zinc-900/50 border border-cyan-500/20 rounded-lg">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-1 h-6 bg-[#22d3ee] rounded-full flex-shrink-0" />
-                      <h4 className="text-sm font-bold text-[#22d3ee] uppercase tracking-wider">
+                    <div className="flex items-center gap-3 mb-3" style={{ height: '24px' }}>
+                      <div className="w-1 h-full bg-[#22d3ee] rounded-full flex-shrink-0" style={{ height: '24px' }} />
+                      <h4 className="text-sm font-bold text-[#22d3ee] uppercase tracking-wider flex items-center" style={{ height: '24px', lineHeight: '24px' }}>
                         BILL TO
                       </h4>
                     </div>
@@ -1046,9 +1046,9 @@ const InvoiceEditor = () => {
                   {invoiceData.paymentLink && (
                     <div className="space-y-4">
                       <div className="p-5 bg-zinc-900/50 border border-cyan-500/20 rounded-lg">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="w-1 h-6 bg-[#22d3ee] rounded-full flex-shrink-0" />
-                          <h4 className="text-sm font-bold text-[#22d3ee] uppercase tracking-wider">
+                        <div className="flex items-center gap-3 mb-3" style={{ height: '24px' }}>
+                          <div className="w-1 h-full bg-[#22d3ee] rounded-full flex-shrink-0" style={{ height: '24px' }} />
+                          <h4 className="text-sm font-bold text-[#22d3ee] uppercase tracking-wider flex items-center" style={{ height: '24px', lineHeight: '24px' }}>
                             PAYMENT DETAILS
                           </h4>
                         </div>
