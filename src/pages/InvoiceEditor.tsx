@@ -171,6 +171,10 @@ const InvoiceEditor = () => {
       const imgWidth = pdfWidth;
       const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
+      // Fill full page background to avoid white gaps
+      pdf.setFillColor(10, 10, 10);
+      pdf.rect(0, 0, pdfWidth, pdfHeight, "F");
+
       if (imgHeight <= pdfHeight) {
         pdf.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
       } else {
@@ -183,6 +187,8 @@ const InvoiceEditor = () => {
         while (heightLeft > 0) {
           position = heightLeft - imgHeight;
           pdf.addPage();
+          pdf.setFillColor(10, 10, 10);
+          pdf.rect(0, 0, pdfWidth, pdfHeight, "F");
           pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
           heightLeft -= pdfHeight;
         }
