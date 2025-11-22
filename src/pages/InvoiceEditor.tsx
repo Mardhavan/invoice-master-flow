@@ -365,11 +365,11 @@ const InvoiceEditor = () => {
     setIsGenerated(true);
     toast.success("Invoice generated and saved!");
     
-    // Scroll to preview
+    // Scroll to top
     setTimeout(() => {
-      document.getElementById("invoice-preview")?.scrollIntoView({ 
-        behavior: "smooth",
-        block: "start"
+      window.scrollTo({ 
+        top: 0,
+        behavior: "smooth"
       });
     }, 100);
   };
