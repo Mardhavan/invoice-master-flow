@@ -311,7 +311,7 @@ const InvoiceEditor = () => {
 
   return (
     <motion.div 
-      className="min-h-screen relative overflow-hidden bg-[#0a0a0a]"
+      className="relative overflow-hidden bg-[#0a0a0a]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -761,14 +761,14 @@ const InvoiceEditor = () => {
                           }}
                           transition={{ duration: 2, repeat: Infinity }}
                         />
-                        <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
+                        <h3 className="text-2xl font-bold text-cyan-400">
                           {companyInfo.name}
                         </h3>
                         <p className="text-sm text-zinc-400 mt-1">{companyInfo.address}</p>
                         <p className="text-sm text-zinc-400">{companyInfo.email}</p>
                       </div>
                       <div className="text-right">
-                        <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-green-400 to-cyan-400 bg-clip-text text-transparent">
+                        <h2 className="text-4xl font-bold text-cyan-400">
                           INVOICE
                         </h2>
                         <div className="mt-3 px-4 py-2 bg-gradient-to-r from-cyan-500/10 to-green-500/10 border border-cyan-500/30 rounded-lg">
