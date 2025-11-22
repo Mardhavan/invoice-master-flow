@@ -889,11 +889,9 @@ const InvoiceEditor = () => {
                       )}
                       <div className="flex items-center justify-between pt-3 border-top border-t border-cyan-500/30">
                         <span className="font-semibold text-white text-lg">Total</span>
-                        <div className="px-4 py-2 rounded-md bg-gradient-to-r from-cyan-400 to-green-400 flex items-center justify-center min-w-[120px]">
-                          <span className="text-lg font-semibold text-zinc-900">
-                            ${calculateTotal().toFixed(2)}
-                          </span>
-                        </div>
+                        <span className="text-2xl font-bold text-cyan-400">
+                          ${calculateTotal().toFixed(2)}
+                        </span>
                       </div>
                     </div>
                   </div>
