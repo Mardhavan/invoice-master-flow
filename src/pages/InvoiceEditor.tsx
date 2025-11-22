@@ -414,24 +414,24 @@ const InvoiceEditor = () => {
         animate={{ y: 0, opacity: 1 }}
         className="relative z-10 border-b border-cyan-500/20 bg-zinc-900/50 backdrop-blur-xl"
       >
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
               <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <Button 
                   variant="ghost" 
                   size="icon" 
                   onClick={() => navigate("/")}
-                  className="hover:bg-cyan-500/10 hover:text-cyan-400 transition-all"
+                  className="hover:bg-cyan-500/10 hover:text-cyan-400 transition-all h-9 w-9 sm:h-10 sm:w-10"
                 >
-                  <FiArrowLeft className="h-5 w-5" />
+                  <FiArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
                 </Button>
               </motion.div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <motion.img 
                   src={applyWizzLogo} 
                   alt="Logo" 
-                  className="h-12 w-auto drop-shadow-[0_0_20px_rgba(34,211,238,0.3)]"
+                  className="h-8 sm:h-12 w-auto drop-shadow-[0_0_20px_rgba(34,211,238,0.3)]"
                   animate={{ 
                     filter: [
                       "drop-shadow(0 0 20px rgba(34,211,238,0.3))",
@@ -442,33 +442,35 @@ const InvoiceEditor = () => {
                   transition={{ duration: 2, repeat: Infinity }}
                 />
                 <div>
-                  <h1 className="text-xl font-bold">
+                  <h1 className="text-base sm:text-xl font-bold">
                     <span className="bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
                       Invoice Creator
                     </span>
                   </h1>
-                  <p className="text-xs text-zinc-400">Futuristic Invoice System</p>
+                  <p className="text-[10px] sm:text-xs text-zinc-400 hidden sm:block">Futuristic Invoice System</p>
                 </div>
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-1.5 sm:gap-2 w-full sm:w-auto overflow-x-auto pb-1 scrollbar-hide">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button 
                   onClick={() => navigate("/history")}
                   variant="outline"
-                  className="border-cyan-500/30 text-white hover:bg-cyan-500/10"
+                  size="sm"
+                  className="border-cyan-500/30 text-white hover:bg-cyan-500/10 text-xs whitespace-nowrap"
                 >
-                  <FiClock className="mr-2 h-4 w-4" />
-                  History
+                  <FiClock className="sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">History</span>
                 </Button>
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button 
                   onClick={saveInvoice}
-                  className="bg-gradient-to-r from-green-500/20 to-cyan-500/20 hover:from-green-500/30 hover:to-cyan-500/30 border border-green-500/30 text-white"
+                  size="sm"
+                  className="bg-gradient-to-r from-green-500/20 to-cyan-500/20 hover:from-green-500/30 hover:to-cyan-500/30 border border-green-500/30 text-white text-xs whitespace-nowrap"
                 >
-                  <FiSave className="mr-2 h-4 w-4" />
-                  Save
+                  <FiSave className="sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Save</span>
                 </Button>
               </motion.div>
               {isGenerated && (
@@ -476,28 +478,31 @@ const InvoiceEditor = () => {
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Button 
                       onClick={exportToPDF}
-                      className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] transition-all"
+                      size="sm"
+                      className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] transition-all text-xs whitespace-nowrap"
                     >
-                      <FiDownload className="mr-2 h-4 w-4" />
-                      PDF
+                      <FiDownload className="sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <span className="hidden sm:inline">PDF</span>
                     </Button>
                   </motion.div>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Button 
                       onClick={exportToImage}
-                      className="bg-gradient-to-r from-cyan-500/20 to-green-500/20 hover:from-cyan-500/30 hover:to-green-500/30 border border-cyan-500/30 text-white"
+                      size="sm"
+                      className="bg-gradient-to-r from-cyan-500/20 to-green-500/20 hover:from-cyan-500/30 hover:to-green-500/30 border border-cyan-500/30 text-white text-xs whitespace-nowrap"
                     >
-                      <FiImage className="mr-2 h-4 w-4" />
-                      Image
+                      <FiImage className="sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <span className="hidden sm:inline">Image</span>
                     </Button>
                   </motion.div>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Button 
                       onClick={exportToHTML}
-                      className="bg-gradient-to-r from-cyan-500/20 to-green-500/20 hover:from-cyan-500/30 hover:to-green-500/30 border border-cyan-500/30 text-white"
+                      size="sm"
+                      className="bg-gradient-to-r from-cyan-500/20 to-green-500/20 hover:from-cyan-500/30 hover:to-green-500/30 border border-cyan-500/30 text-white text-xs whitespace-nowrap"
                     >
-                      <FiCode className="mr-2 h-4 w-4" />
-                      HTML
+                      <FiCode className="sm:mr-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                      <span className="hidden sm:inline">HTML</span>
                     </Button>
                   </motion.div>
                 </>
@@ -507,22 +512,22 @@ const InvoiceEditor = () => {
         </div>
       </motion.div>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid gap-8 lg:grid-cols-[1fr,550px]">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+        <div className="grid gap-4 sm:gap-6 lg:gap-8 lg:grid-cols-[1fr,550px]">
           {/* Editor Section */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Invoice Details */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
             >
-              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
-                  <h2 className="text-lg font-semibold text-white">Invoice Details</h2>
+              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-4 sm:p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
+                <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                  <div className="h-6 sm:h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
+                  <h2 className="text-base sm:text-lg font-semibold text-white">Invoice Details</h2>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <Label className="text-cyan-300">Invoice Number</Label>
                     <Input
@@ -571,12 +576,12 @@ const InvoiceEditor = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
-                  <h2 className="text-lg font-semibold text-white">Client Information</h2>
+              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-4 sm:p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
+                <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                  <div className="h-6 sm:h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
+                  <h2 className="text-base sm:text-lg font-semibold text-white">Client Information</h2>
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <div>
                     <Label className="text-cyan-300">Client Name</Label>
                     <Input
@@ -616,20 +621,21 @@ const InvoiceEditor = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
-                <div className="flex items-center justify-between mb-4">
+              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-4 sm:p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
+                <div className="flex items-center justify-between mb-3 sm:mb-4 gap-2">
                   <div className="flex items-center gap-2">
-                    <div className="h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
-                    <h2 className="text-lg font-semibold text-white">Line Items</h2>
+                    <div className="h-6 sm:h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
+                    <h2 className="text-base sm:text-lg font-semibold text-white">Line Items</h2>
                   </div>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <Button 
                       size="sm" 
                       onClick={addLineItem}
-                      className="bg-gradient-to-r from-cyan-500/20 to-green-500/20 hover:from-cyan-500/30 hover:to-green-500/30 border border-cyan-500/30 text-white"
+                      className="bg-gradient-to-r from-cyan-500/20 to-green-500/20 hover:from-cyan-500/30 hover:to-green-500/30 border border-cyan-500/30 text-white text-xs sm:text-sm"
                     >
-                      <FiPlus className="mr-2 h-4 w-4" />
-                      Add Item
+                      <FiPlus className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                      <span className="hidden sm:inline">Add Item</span>
+                      <span className="sm:hidden">Add</span>
                     </Button>
                   </motion.div>
                 </div>
@@ -642,61 +648,62 @@ const InvoiceEditor = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="p-4 border border-cyan-500/20 rounded-lg bg-zinc-800/30 backdrop-blur-sm hover:border-cyan-500/40 transition-all"
+                        className="p-3 sm:p-4 border border-cyan-500/20 rounded-lg bg-zinc-800/30 backdrop-blur-sm hover:border-cyan-500/40 transition-all"
                       >
-                        <div className="grid grid-cols-12 gap-3 items-start">
-                          <div className="col-span-12 md:col-span-6">
+                        <div className="space-y-3">
+                          <div>
                             <Label className="text-xs text-zinc-400">Description</Label>
                             <Input
                               value={item.description}
                               onChange={(e) => updateLineItem(item.id, "description", e.target.value)}
                               placeholder="Service or product name"
-                              className="mt-1.5 bg-zinc-900/50 border-cyan-500/20 text-white placeholder:text-zinc-600"
+                              className="mt-1.5 bg-zinc-900/50 border-cyan-500/20 text-white placeholder:text-zinc-600 text-sm"
                             />
                           </div>
-                          <div className="col-span-4 md:col-span-2">
-                            <Label className="text-xs text-zinc-400">Quantity</Label>
-                            <Input
-                              type="number"
-                              value={item.quantity}
-                              onChange={(e) => updateLineItem(item.id, "quantity", parseFloat(e.target.value) || 0)}
-                              min="0"
-                              className="mt-1.5 bg-zinc-900/50 border-cyan-500/20 text-white"
-                            />
-                          </div>
-                          <div className="col-span-4 md:col-span-2">
-                            <Label className="text-xs text-zinc-400">Rate ($)</Label>
-                            <Input
-                              type="number"
-                              value={item.rate}
-                              onChange={(e) => updateLineItem(item.id, "rate", parseFloat(e.target.value) || 0)}
-                              min="0"
-                              step="0.01"
-                              className="mt-1.5 bg-zinc-900/50 border-cyan-500/20 text-white"
-                            />
-                          </div>
-                          <div className="col-span-4 md:col-span-2 flex items-end gap-2">
-                            <div className="flex-1">
+                          <div className="grid grid-cols-3 gap-2">
+                            <div>
+                              <Label className="text-xs text-zinc-400">Qty</Label>
+                              <Input
+                                type="number"
+                                value={item.quantity}
+                                onChange={(e) => updateLineItem(item.id, "quantity", parseFloat(e.target.value) || 0)}
+                                min="0"
+                                className="mt-1.5 bg-zinc-900/50 border-cyan-500/20 text-white text-sm"
+                              />
+                            </div>
+                            <div>
+                              <Label className="text-xs text-zinc-400">Rate ($)</Label>
+                              <Input
+                                type="number"
+                                value={item.rate}
+                                onChange={(e) => updateLineItem(item.id, "rate", parseFloat(e.target.value) || 0)}
+                                min="0"
+                                step="0.01"
+                                className="mt-1.5 bg-zinc-900/50 border-cyan-500/20 text-white text-sm"
+                              />
+                            </div>
+                            <div>
                               <Label className="text-xs text-zinc-400">Amount</Label>
-                              <div className="mt-1.5 h-10 flex items-center px-3 rounded-md bg-zinc-900/50 border border-cyan-500/20">
-                                <span className="text-sm font-semibold bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
+                              <div className="mt-1.5 h-9 flex items-center px-2 rounded-md bg-zinc-900/50 border border-cyan-500/20">
+                                <span className="text-xs font-semibold bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
                                   ${(item.quantity * item.rate).toFixed(2)}
                                 </span>
                               </div>
                             </div>
-                            {invoiceData.lineItems.length > 1 && (
-                              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  onClick={() => removeLineItem(item.id)}
-                                  className="text-red-400 hover:bg-red-500/10 hover:text-red-300"
-                                >
-                                  <FiTrash2 className="h-4 w-4" />
-                                </Button>
-                              </motion.div>
-                            )}
                           </div>
+                          {invoiceData.lineItems.length > 1 && (
+                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="flex justify-end">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => removeLineItem(item.id)}
+                                className="text-red-400 hover:bg-red-500/10 hover:text-red-300 text-xs"
+                              >
+                                <FiTrash2 className="h-3.5 w-3.5 mr-1" />
+                                Remove
+                              </Button>
+                            </motion.div>
+                          )}
                         </div>
                       </motion.div>
                     ))}
@@ -711,12 +718,12 @@ const InvoiceEditor = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
-                  <h2 className="text-lg font-semibold text-white">Adjustments</h2>
+              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-4 sm:p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
+                <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                  <div className="h-6 sm:h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
+                  <h2 className="text-base sm:text-lg font-semibold text-white">Adjustments</h2>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <Label className="text-cyan-300">Tax (%)</Label>
                     <Input
@@ -751,10 +758,10 @@ const InvoiceEditor = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5 }}
             >
-              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
-                  <h2 className="text-lg font-semibold text-white">Payment Information</h2>
+              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-4 sm:p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
+                <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                  <div className="h-6 sm:h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
+                  <h2 className="text-base sm:text-lg font-semibold text-white">Payment Information</h2>
                 </div>
                 <div>
                   <Label className="text-cyan-300">Payment Link</Label>
@@ -774,10 +781,10 @@ const InvoiceEditor = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6 }}
             >
-              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
-                  <h2 className="text-lg font-semibold text-white">Additional Notes</h2>
+              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-4 sm:p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
+                <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                  <div className="h-6 sm:h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
+                  <h2 className="text-base sm:text-lg font-semibold text-white">Additional Notes</h2>
                 </div>
                 <Textarea
                   value={invoiceData.notes}
@@ -797,7 +804,7 @@ const InvoiceEditor = () => {
             >
               <Button
                 onClick={generateInvoice}
-                className="w-full h-14 bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white text-lg font-semibold shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:shadow-[0_0_40px_rgba(34,211,238,0.6)] transition-all"
+                className="w-full h-12 sm:h-14 bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white text-base sm:text-lg font-semibold shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:shadow-[0_0_40px_rgba(34,211,238,0.6)] transition-all"
               >
                 Generate Invoice
               </Button>
@@ -813,7 +820,7 @@ const InvoiceEditor = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.5 }}
-                className="lg:sticky lg:top-8 h-fit"
+                className="lg:sticky lg:top-8 h-fit hidden lg:block"
               >
                 <Card className="bg-zinc-900/50 backdrop-blur-xl border-cyan-500/20 p-12 shadow-[0_0_40px_rgba(34,211,238,0.15)] flex flex-col items-center justify-center min-h-[600px]">
                   <motion.div
@@ -894,30 +901,30 @@ const InvoiceEditor = () => {
                 transition={{ delay: 0.2 }}
                 className="lg:sticky lg:top-8 h-fit"
               >
-                <Card className="bg-zinc-900/50 backdrop-blur-xl border-cyan-500/20 p-4 shadow-[0_0_40px_rgba(34,211,238,0.15)]">
+                <Card className="bg-zinc-900/50 backdrop-blur-xl border-cyan-500/20 p-3 sm:p-4 shadow-[0_0_40px_rgba(34,211,238,0.15)]">
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <FiFileText className="h-5 w-5 text-cyan-400" />
-                      <h3 className="text-sm font-semibold text-white">Live Preview</h3>
+                      <FiFileText className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400" />
+                      <h3 className="text-xs sm:text-sm font-semibold text-white">Live Preview</h3>
                     </div>
                     <div className="flex gap-1">
-                      <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                      <div className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse" style={{ animationDelay: '0.2s' }} />
-                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" style={{ animationDelay: '0.4s' }} />
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 animate-pulse" />
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-yellow-500 animate-pulse" style={{ animationDelay: '0.2s' }} />
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse" style={{ animationDelay: '0.4s' }} />
                     </div>
                   </div>
                   
                   <div id="invoice-preview" className="bg-zinc-950/90 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden border border-cyan-500/10">
-                    <div className="p-8 space-y-8">
+                    <div className="p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 lg:space-y-8">
                   {/* Header with Gradient Border */}
-                  <div className="relative pb-6 border-b border-gradient-to-r from-transparent via-cyan-500/50 to-transparent">
+                  <div className="relative pb-4 sm:pb-6 border-b border-gradient-to-r from-transparent via-cyan-500/50 to-transparent">
                     <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
-                    <div className="flex items-start justify-between">
+                    <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
                       <div>
                         <motion.img
                           src={companyInfo.logo}
                           alt="Company Logo"
-                          className="h-16 w-auto object-contain mb-3 drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]"
+                          className="h-10 sm:h-12 lg:h-16 w-auto object-contain mb-2 sm:mb-3 drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]"
                           animate={{ 
                             filter: [
                               "drop-shadow(0 0 15px rgba(34,211,238,0.4))",
@@ -927,23 +934,23 @@ const InvoiceEditor = () => {
                           }}
                           transition={{ duration: 2, repeat: Infinity }}
                         />
-                        <h3 className="text-2xl font-bold text-cyan-400">
+                        <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-cyan-400">
                           {companyInfo.name}
                         </h3>
-                        <p className="text-sm text-zinc-400 mt-1">{companyInfo.address}</p>
-                        <p className="text-sm text-zinc-400">{companyInfo.email}</p>
+                        <p className="text-xs sm:text-sm text-zinc-400 mt-1">{companyInfo.address}</p>
+                        <p className="text-xs sm:text-sm text-zinc-400">{companyInfo.email}</p>
                       </div>
-                      <div className="text-right">
-                        <h2 className="text-4xl font-bold text-[#22d3ee] tracking-wider leading-none mb-4">
+                      <div className="text-left sm:text-right w-full sm:w-auto">
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#22d3ee] tracking-wider leading-none mb-3 sm:mb-4">
                           INVOICE
                         </h2>
-                        <div className="px-5 py-4 bg-zinc-900/80 border border-cyan-500/30 rounded-lg">
-                          <p className="text-xs text-zinc-400 mb-2 leading-none">Invoice Number</p>
-                          <p className="text-lg font-bold text-[#22d3ee] leading-none">
+                        <div className="px-3 sm:px-4 lg:px-5 py-3 sm:py-4 bg-zinc-900/80 border border-cyan-500/30 rounded-lg">
+                          <p className="text-[10px] sm:text-xs text-zinc-400 mb-1.5 sm:mb-2 leading-none">Invoice Number</p>
+                          <p className="text-sm sm:text-base lg:text-lg font-bold text-[#22d3ee] leading-none">
                             {invoiceData.invoiceNumber}
                           </p>
                         </div>
-                        <p className="text-sm text-zinc-400 mt-3">
+                        <p className="text-xs sm:text-sm text-zinc-400 mt-2 sm:mt-3">
                           {format(new Date(invoiceData.date), "MMM dd, yyyy")}
                         </p>
                       </div>
@@ -951,46 +958,46 @@ const InvoiceEditor = () => {
                   </div>
 
                   {/* Bill To with Glow Effect */}
-                  <div className="p-5 bg-zinc-900/50 border border-cyan-500/20 rounded-lg">
-                    <h4 className="text-sm font-bold text-[#22d3ee] uppercase tracking-wider mb-3">
+                  <div className="p-3 sm:p-4 lg:p-5 bg-zinc-900/50 border border-cyan-500/20 rounded-lg">
+                    <h4 className="text-xs sm:text-sm font-bold text-[#22d3ee] uppercase tracking-wider mb-2 sm:mb-3">
                       • BILL TO
                     </h4>
-                    <p className="font-semibold text-white text-lg">
+                    <p className="font-semibold text-white text-base sm:text-lg">
                       {invoiceData.clientName || "Client Name"}
                     </p>
                     {invoiceData.clientEmail && (
-                      <p className="text-sm text-zinc-400 mt-1">{invoiceData.clientEmail}</p>
+                      <p className="text-xs sm:text-sm text-zinc-400 mt-1">{invoiceData.clientEmail}</p>
                     )}
                     {invoiceData.clientAddress && (
-                      <p className="text-sm text-zinc-400 whitespace-pre-line mt-1">
+                      <p className="text-xs sm:text-sm text-zinc-400 whitespace-pre-line mt-1">
                         {invoiceData.clientAddress}
                       </p>
                     )}
                   </div>
 
                   {/* Introduction Text */}
-                  <div className="p-4 bg-gradient-to-br from-cyan-500/5 to-green-500/5 border-l-4 border-cyan-500 rounded-r-lg">
-                    <p className="text-sm text-zinc-300 italic leading-relaxed">
+                  <div className="p-3 sm:p-4 bg-gradient-to-br from-cyan-500/5 to-green-500/5 border-l-2 sm:border-l-4 border-cyan-500 rounded-r-lg">
+                    <p className="text-xs sm:text-sm text-zinc-300 italic leading-relaxed">
                       Thank you for choosing Apply Wizz. Please find below the detailed breakdown of services and charges for your order:
                     </p>
                   </div>
 
                   {/* Futuristic Table */}
                   <div>
-                    <div className="border border-cyan-500/20 rounded-lg overflow-hidden bg-zinc-900/50">
-                      <table className="w-full">
+                    <div className="border border-cyan-500/20 rounded-lg overflow-x-auto bg-zinc-900/50">
+                      <table className="w-full min-w-[500px]">
                         <thead className="bg-gradient-to-r from-cyan-500/10 to-green-500/10">
                           <tr className="border-b border-cyan-500/20">
-                            <th className="px-4 py-3 text-left text-xs font-semibold text-cyan-300 uppercase tracking-wider">
+                            <th className="px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-left text-[10px] sm:text-xs font-semibold text-cyan-300 uppercase tracking-wider">
                               Description
                             </th>
-                            <th className="px-4 py-3 text-right text-xs font-semibold text-cyan-300 uppercase tracking-wider w-16">
+                            <th className="px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-right text-[10px] sm:text-xs font-semibold text-cyan-300 uppercase tracking-wider w-12 sm:w-16">
                               Qty
                             </th>
-                            <th className="px-4 py-3 text-right text-xs font-semibold text-cyan-300 uppercase tracking-wider w-24">
+                            <th className="px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-right text-[10px] sm:text-xs font-semibold text-cyan-300 uppercase tracking-wider w-16 sm:w-24">
                               Rate
                             </th>
-                            <th className="px-4 py-3 text-right text-xs font-semibold text-cyan-300 uppercase tracking-wider w-28">
+                            <th className="px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-right text-[10px] sm:text-xs font-semibold text-cyan-300 uppercase tracking-wider w-20 sm:w-28">
                               Amount
                             </th>
                           </tr>
@@ -1001,16 +1008,16 @@ const InvoiceEditor = () => {
                               "border-b border-cyan-500/10",
                               index % 2 === 0 ? "bg-zinc-900/30" : "bg-transparent"
                             )}>
-                              <td className="px-4 py-3 text-sm text-white">
+                              <td className="px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-xs sm:text-sm text-white">
                                 {item.description || "—"}
                               </td>
-                              <td className="px-4 py-3 text-right text-sm text-zinc-400">
+                              <td className="px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm text-zinc-400">
                                 {item.quantity}
                               </td>
-                              <td className="px-4 py-3 text-right text-sm text-zinc-400">
+                              <td className="px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm text-zinc-400">
                                 ${item.rate.toFixed(2)}
                               </td>
-                              <td className="px-4 py-3 text-right text-sm font-semibold text-cyan-300">
+                              <td className="px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-right text-xs sm:text-sm font-semibold text-cyan-300">
                                 ${(item.quantity * item.rate).toFixed(2)}
                               </td>
                             </tr>
@@ -1022,15 +1029,15 @@ const InvoiceEditor = () => {
 
                   {/* Totals with Gradient */}
                   <div className="flex justify-end">
-                    <div className="w-72 space-y-3 p-5 bg-gradient-to-br from-zinc-900/90 to-zinc-900/50 border border-cyan-500/20 rounded-lg">
-                      <div className="flex justify-between text-sm">
+                    <div className="w-full sm:w-72 space-y-2 sm:space-y-3 p-3 sm:p-4 lg:p-5 bg-gradient-to-br from-zinc-900/90 to-zinc-900/50 border border-cyan-500/20 rounded-lg">
+                      <div className="flex justify-between text-xs sm:text-sm">
                         <span className="text-zinc-400">Subtotal</span>
                         <span className="font-medium text-white">
                           ${calculateSubtotal().toFixed(2)}
                         </span>
                       </div>
                       {invoiceData.tax > 0 && (
-                        <div className="flex justify-between text-sm">
+                        <div className="flex justify-between text-xs sm:text-sm">
                           <span className="text-zinc-400">Tax ({invoiceData.tax}%)</span>
                           <span className="font-medium text-white">
                             ${((calculateSubtotal() * invoiceData.tax) / 100).toFixed(2)}
@@ -1038,7 +1045,7 @@ const InvoiceEditor = () => {
                         </div>
                       )}
                       {invoiceData.discount > 0 && (
-                        <div className="flex justify-between text-sm">
+                        <div className="flex justify-between text-xs sm:text-sm">
                           <span className="text-zinc-400">
                             Discount ({invoiceData.discount}%)
                           </span>
@@ -1047,9 +1054,9 @@ const InvoiceEditor = () => {
                           </span>
                         </div>
                       )}
-                      <div className="flex items-center justify-between pt-3 border-top border-t border-cyan-500/30">
-                        <span className="font-semibold text-white text-lg">Total</span>
-                        <span className="text-2xl font-bold text-[#22d3ee]">
+                      <div className="flex items-center justify-between pt-2 sm:pt-3 border-top border-t border-cyan-500/30">
+                        <span className="font-semibold text-white text-base sm:text-lg">Total</span>
+                        <span className="text-xl sm:text-2xl font-bold text-[#22d3ee]">
                           ${calculateTotal().toFixed(2)}
                         </span>
                       </div>
@@ -1058,19 +1065,19 @@ const InvoiceEditor = () => {
 
                   {/* Payment Details Section */}
                   {invoiceData.paymentLink && (
-                    <div className="space-y-4">
-                      <div className="p-5 bg-zinc-900/50 border border-cyan-500/20 rounded-lg">
-                        <h4 className="text-sm font-bold text-[#22d3ee] uppercase tracking-wider mb-3">
+                    <div className="space-y-3 sm:space-y-4">
+                      <div className="p-3 sm:p-4 lg:p-5 bg-zinc-900/50 border border-cyan-500/20 rounded-lg">
+                        <h4 className="text-xs sm:text-sm font-bold text-[#22d3ee] uppercase tracking-wider mb-2 sm:mb-3">
                           • PAYMENT DETAILS
                         </h4>
                         <div className="space-y-2">
-                          <div className="flex items-start gap-2">
-                            <span className="text-sm text-zinc-400 font-medium">Payment Link:</span>
+                          <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
+                            <span className="text-xs sm:text-sm text-zinc-400 font-medium whitespace-nowrap">Payment Link:</span>
                             <a 
                               href={invoiceData.paymentLink} 
                               target="_blank" 
                               rel="noopener noreferrer" 
-                              className="text-sm text-cyan-400 hover:text-cyan-300 underline break-all"
+                              className="text-xs sm:text-sm text-cyan-400 hover:text-cyan-300 underline break-all"
                             >
                               {invoiceData.paymentLink}
                             </a>
@@ -1078,8 +1085,8 @@ const InvoiceEditor = () => {
                         </div>
                       </div>
                       
-                      <div className="p-4 bg-gradient-to-br from-green-500/5 to-cyan-500/5 border-l-4 border-green-500 rounded-r-lg">
-                        <p className="text-sm text-zinc-300 italic leading-relaxed">
+                      <div className="p-3 sm:p-4 bg-gradient-to-br from-green-500/5 to-cyan-500/5 border-l-2 sm:border-l-4 border-green-500 rounded-r-lg">
+                        <p className="text-xs sm:text-sm text-zinc-300 italic leading-relaxed">
                           The payment link is attached. Once payment is complete, please reply to this email to confirm so we can proceed with the work.
                         </p>
                       </div>
@@ -1088,13 +1095,13 @@ const InvoiceEditor = () => {
 
                   {/* Notes Section */}
                   {invoiceData.notes && (
-                    <div className="pt-6 border-t border-cyan-500/20">
-                      <div className="p-4 bg-gradient-to-br from-cyan-500/5 to-green-500/5 border border-cyan-500/20 rounded-lg">
-                        <h4 className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-                          <div className="w-1 h-4 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
+                    <div className="pt-4 sm:pt-6 border-t border-cyan-500/20">
+                      <div className="p-3 sm:p-4 bg-gradient-to-br from-cyan-500/5 to-green-500/5 border border-cyan-500/20 rounded-lg">
+                        <h4 className="text-[10px] sm:text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                          <div className="w-0.5 sm:w-1 h-3 sm:h-4 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
                           Notes
                         </h4>
-                        <p className="text-sm text-zinc-300 whitespace-pre-line">
+                        <p className="text-xs sm:text-sm text-zinc-300 whitespace-pre-line">
                           {invoiceData.notes}
                         </p>
                       </div>
@@ -1102,8 +1109,8 @@ const InvoiceEditor = () => {
                   )}
 
                       {/* Footer */}
-                      <div className="pt-6 border-t border-cyan-500/20 text-center">
-                        <p className="text-xs text-zinc-500">
+                      <div className="pt-4 sm:pt-6 border-t border-cyan-500/20 text-center">
+                        <p className="text-[10px] sm:text-xs text-zinc-500">
                           Thank you for your business! • Powered by Apply Wizz
                         </p>
                       </div>
