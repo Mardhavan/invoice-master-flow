@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { FiPlus, FiTrash2, FiDownload, FiArrowLeft, FiFileText, FiImage, FiCode, FiSave, FiClock } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -39,6 +39,7 @@ interface InvoiceData {
 
 const InvoiceEditor = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [isGenerated, setIsGenerated] = useState(false);
   
   const getNextInvoiceNumber = () => {
@@ -47,7 +48,7 @@ const InvoiceEditor = () => {
     return `INV-${nextNumber}`;
   };
 
-  const [invoiceData, setInvoiceData] = useState<InvoiceData>({
+  const getInitialData = (): InvoiceData => ({
     invoiceNumber: getNextInvoiceNumber(),
     clientName: "",
     clientEmail: "",
@@ -60,12 +61,24 @@ const InvoiceEditor = () => {
     paymentLink: "",
   });
 
+  const [invoiceData, setInvoiceData] = useState<InvoiceData>(getInitialData());
+
   useEffect(() => {
-    const saved = localStorage.getItem("currentInvoiceData");
-    if (saved) {
-      setInvoiceData(JSON.parse(saved));
+    const isNewInvoice = searchParams.get("new") === "true";
+    
+    if (isNewInvoice) {
+      // Clear localStorage and reset to fresh state
+      localStorage.removeItem("currentInvoiceData");
+      setInvoiceData(getInitialData());
+      setIsGenerated(false);
+    } else {
+      // Load saved data if available
+      const saved = localStorage.getItem("currentInvoiceData");
+      if (saved) {
+        setInvoiceData(JSON.parse(saved));
+      }
     }
-  }, []);
+  }, [searchParams]);
 
   useEffect(() => {
     localStorage.setItem("currentInvoiceData", JSON.stringify(invoiceData));
