@@ -914,12 +914,12 @@ const InvoiceEditor = () => {
                         <p className="text-sm text-zinc-400">{companyInfo.email}</p>
                       </div>
                       <div className="text-right">
-                        <h2 className="text-4xl font-bold text-cyan-400">
+                        <h2 className="text-4xl font-bold text-[#22d3ee] tracking-wider">
                           INVOICE
                         </h2>
-                        <div className="mt-3 px-4 py-2 bg-gradient-to-r from-cyan-500/10 to-green-500/10 border border-cyan-500/30 rounded-lg">
-                          <p className="text-xs text-zinc-400">Invoice Number</p>
-                          <p className="text-sm font-bold text-cyan-300">
+                        <div className="mt-3 px-4 py-3 bg-zinc-900/80 border border-cyan-500/30 rounded-lg">
+                          <p className="text-xs text-zinc-400 mb-1">Invoice Number</p>
+                          <p className="text-lg font-bold text-[#22d3ee]">
                             {invoiceData.invoiceNumber}
                           </p>
                         </div>
@@ -931,10 +931,10 @@ const InvoiceEditor = () => {
                   </div>
 
                   {/* Bill To with Glow Effect */}
-                  <div className="p-4 bg-gradient-to-br from-cyan-500/5 to-green-500/5 border border-cyan-500/20 rounded-lg">
-                    <h4 className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-2">
-                      <div className="w-1 h-4 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
-                      Bill To
+                  <div className="p-4 bg-zinc-900/50 border border-cyan-500/20 rounded-lg">
+                    <h4 className="text-sm font-semibold text-[#22d3ee] uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <div className="w-1 h-5 bg-[#22d3ee] rounded-sm" />
+                      BILL TO
                     </h4>
                     <p className="font-semibold text-white text-lg">
                       {invoiceData.clientName || "Client Name"}
@@ -1040,10 +1040,10 @@ const InvoiceEditor = () => {
                   {/* Payment Details Section */}
                   {invoiceData.paymentLink && (
                     <div className="space-y-4">
-                      <div className="p-4 bg-gradient-to-br from-cyan-500/5 to-green-500/5 border border-cyan-500/20 rounded-lg">
-                        <h4 className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                          <div className="w-1 h-4 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
-                          Payment Details
+                      <div className="p-4 bg-zinc-900/50 border border-cyan-500/20 rounded-lg">
+                        <h4 className="text-sm font-semibold text-[#22d3ee] uppercase tracking-wider mb-3 flex items-center gap-2">
+                          <div className="w-1 h-5 bg-[#22d3ee] rounded-sm" />
+                          PAYMENT DETAILS
                         </h4>
                         <div className="space-y-2">
                           <div className="flex items-start gap-2">
