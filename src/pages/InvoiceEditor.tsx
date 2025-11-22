@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { FiPlus, FiTrash2, FiDownload, FiArrowLeft, FiFileText, FiImage, FiCode } from "react-icons/fi";
+import { FiPlus, FiTrash2, FiDownload, FiArrowLeft, FiFileText, FiImage, FiCode, FiSave, FiClock } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import jsPDF from "jspdf";
@@ -309,6 +309,29 @@ const InvoiceEditor = () => {
     }
   };
 
+  const saveInvoice = () => {
+    if (!invoiceData.clientName) {
+      toast.error("Please add a client name before saving");
+      return;
+    }
+
+    const saved = localStorage.getItem("invoiceHistory");
+    const history = saved ? JSON.parse(saved) : [];
+    
+    const invoice = {
+      id: Date.now().toString(),
+      invoiceNumber: invoiceData.invoiceNumber,
+      clientName: invoiceData.clientName,
+      date: invoiceData.date,
+      total: calculateTotal(),
+      data: invoiceData
+    };
+
+    history.unshift(invoice);
+    localStorage.setItem("invoiceHistory", JSON.stringify(history));
+    toast.success("Invoice saved successfully!");
+  };
+
   return (
     <motion.div 
       className="min-h-screen relative overflow-hidden bg-[#0a0a0a]"
@@ -387,6 +410,25 @@ const InvoiceEditor = () => {
               </div>
             </div>
             <div className="flex gap-2">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  onClick={() => navigate("/history")}
+                  variant="outline"
+                  className="border-cyan-500/30 text-white hover:bg-cyan-500/10"
+                >
+                  <FiClock className="mr-2 h-4 w-4" />
+                  History
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button 
+                  onClick={saveInvoice}
+                  className="bg-gradient-to-r from-green-500/20 to-cyan-500/20 hover:from-green-500/30 hover:to-cyan-500/30 border border-green-500/30 text-white"
+                >
+                  <FiSave className="mr-2 h-4 w-4" />
+                  Save
+                </Button>
+              </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button 
                   onClick={exportToPDF}
