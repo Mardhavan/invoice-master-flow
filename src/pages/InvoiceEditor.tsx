@@ -769,9 +769,89 @@ const InvoiceEditor = () => {
           </div>
 
           {/* Preview Section */}
-          <AnimatePresence>
-            {isGenerated && (
+          <AnimatePresence mode="wait">
+            {!isGenerated ? (
               <motion.div
+                key="logo-preview"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.5 }}
+                className="lg:sticky lg:top-8 h-fit"
+              >
+                <Card className="bg-zinc-900/50 backdrop-blur-xl border-cyan-500/20 p-12 shadow-[0_0_40px_rgba(34,211,238,0.15)] flex flex-col items-center justify-center min-h-[600px]">
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.05, 1],
+                      rotateY: [0, 5, 0, -5, 0],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className="relative"
+                  >
+                    <motion.div
+                      className="absolute inset-0 rounded-full blur-3xl"
+                      animate={{
+                        background: [
+                          "radial-gradient(circle, rgba(34,211,238,0.3) 0%, transparent 70%)",
+                          "radial-gradient(circle, rgba(34,211,238,0.5) 0%, transparent 70%)",
+                          "radial-gradient(circle, rgba(16,185,129,0.5) 0%, transparent 70%)",
+                          "radial-gradient(circle, rgba(34,211,238,0.3) 0%, transparent 70%)"
+                        ]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    />
+                    <motion.img
+                      src={applyWizzLogo}
+                      alt="Apply Wizz Logo"
+                      className="relative z-10 w-64 h-64 object-contain drop-shadow-[0_0_30px_rgba(34,211,238,0.6)]"
+                      animate={{
+                        filter: [
+                          "drop-shadow(0 0 30px rgba(34,211,238,0.6))",
+                          "drop-shadow(0 0 50px rgba(34,211,238,0.8))",
+                          "drop-shadow(0 0 30px rgba(16,185,129,0.8))",
+                          "drop-shadow(0 0 30px rgba(34,211,238,0.6))"
+                        ]
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="mt-8 text-center space-y-4"
+                  >
+                    <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 via-green-400 to-cyan-400 bg-clip-text text-transparent">
+                      Invoice Generator
+                    </h3>
+                    <p className="text-zinc-400 text-sm max-w-md">
+                      Fill in the invoice details on the left and click "Generate Invoice" to create your professional invoice.
+                    </p>
+                  </motion.div>
+                  <motion.div
+                    className="absolute bottom-8 left-1/2 -translate-x-1/2"
+                    animate={{ y: [0, 10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <div className="text-cyan-400/50 text-xs">↓</div>
+                  </motion.div>
+                </Card>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="invoice-preview"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
