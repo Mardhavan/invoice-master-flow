@@ -39,6 +39,7 @@ interface InvoiceData {
 
 const InvoiceEditor = () => {
   const navigate = useNavigate();
+  const [isGenerated, setIsGenerated] = useState(false);
   
   const getNextInvoiceNumber = () => {
     const lastNumber = localStorage.getItem("lastInvoiceNumber");
@@ -312,6 +313,33 @@ const InvoiceEditor = () => {
     history.unshift(invoice);
     localStorage.setItem("invoiceHistory", JSON.stringify(history));
     toast.success("Invoice saved successfully!");
+  };
+
+  const generateInvoice = () => {
+    if (!invoiceData.clientName) {
+      toast.error("Please add a client name");
+      return;
+    }
+
+    const hasValidLineItem = invoiceData.lineItems.some(
+      item => item.description && item.rate > 0
+    );
+
+    if (!hasValidLineItem) {
+      toast.error("Please add at least one valid line item");
+      return;
+    }
+
+    setIsGenerated(true);
+    toast.success("Invoice generated successfully!");
+    
+    // Scroll to preview
+    setTimeout(() => {
+      document.getElementById("invoice-preview")?.scrollIntoView({ 
+        behavior: "smooth",
+        block: "start"
+      });
+    }, 100);
   };
 
   return (
@@ -724,15 +752,32 @@ const InvoiceEditor = () => {
                 />
               </Card>
             </motion.div>
+
+            {/* Generate Invoice Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+            >
+              <Button
+                onClick={generateInvoice}
+                className="w-full h-14 bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white text-lg font-semibold shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:shadow-[0_0_40px_rgba(34,211,238,0.6)] transition-all"
+              >
+                Generate Invoice
+              </Button>
+            </motion.div>
           </div>
 
           {/* Preview Section */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="lg:sticky lg:top-8 h-fit"
-          >
+          <AnimatePresence>
+            {isGenerated && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ delay: 0.2 }}
+                className="lg:sticky lg:top-8 h-fit"
+              >
             <Card className="bg-zinc-900/50 backdrop-blur-xl border-cyan-500/20 p-4 shadow-[0_0_40px_rgba(34,211,238,0.15)]">
               <div className="mb-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -952,6 +997,8 @@ const InvoiceEditor = () => {
               </div>
             </Card>
           </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </motion.div>
