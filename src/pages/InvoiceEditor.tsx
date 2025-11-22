@@ -134,29 +134,6 @@ const InvoiceEditor = () => {
     clone.style.boxSizing = "border-box";
     document.body.appendChild(clone);
 
-    const backgrounds = clone.querySelectorAll('[class*="bg-zinc"], [class*="bg-gradient"]');
-    backgrounds.forEach((el) => {
-      const element = el as HTMLElement;
-      element.style.backgroundColor = '#ffffff';
-      element.style.backgroundImage = 'none';
-    });
-
-    const styledTexts = clone.querySelectorAll('.bg-gradient-to-r, .bg-clip-text, [class*="text-transparent"]');
-    styledTexts.forEach((el) => {
-      const element = el as HTMLElement;
-      element.style.background = 'none';
-      element.style.backgroundImage = 'none';
-      element.style.backgroundClip = 'unset';
-      element.style.webkitBackgroundClip = 'unset';
-      element.style.color = '#000000';
-    });
-
-    const borders = clone.querySelectorAll('[class*="border"]');
-    borders.forEach((el) => {
-      const element = el as HTMLElement;
-      element.style.borderColor = '#e5e7eb';
-    });
-
     return clone;
   };
 
@@ -174,7 +151,7 @@ const InvoiceEditor = () => {
         useCORS: true,
         allowTaint: true,
         logging: false,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#0a0a0a',
         width: 794,
         windowWidth: 794,
       });
@@ -233,7 +210,7 @@ const InvoiceEditor = () => {
         useCORS: true,
         allowTaint: true,
         logging: false,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#0a0a0a',
         width: 794,
         windowWidth: 794,
       });
@@ -764,16 +741,17 @@ const InvoiceEditor = () => {
                 </div>
               </div>
               
-              <div id="invoice-preview" className="bg-white rounded-lg shadow-2xl overflow-hidden border border-zinc-200">
+              <div id="invoice-preview" className="bg-zinc-950/90 backdrop-blur-sm rounded-lg shadow-2xl overflow-hidden border border-cyan-500/10">
                 <div className="p-8 space-y-8">
                   {/* Header with Gradient Border */}
-                  <div className="relative pb-6 border-b border-zinc-200">
+                  <div className="relative pb-6 border-b border-gradient-to-r from-transparent via-cyan-500/50 to-transparent">
+                    <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
                     <div className="flex items-start justify-between">
                       <div>
                         <motion.img
                           src={companyInfo.logo}
                           alt="Company Logo"
-                          className="h-16 w-auto object-contain mb-3"
+                          className="h-16 w-auto object-contain mb-3 drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]"
                           animate={{ 
                             filter: [
                               "drop-shadow(0 0 15px rgba(34,211,238,0.4))",
@@ -783,23 +761,23 @@ const InvoiceEditor = () => {
                           }}
                           transition={{ duration: 2, repeat: Infinity }}
                         />
-                        <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-green-600 bg-clip-text text-transparent">
+                        <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
                           {companyInfo.name}
                         </h3>
-                        <p className="text-sm text-zinc-600 mt-1">{companyInfo.address}</p>
-                        <p className="text-sm text-zinc-600">{companyInfo.email}</p>
+                        <p className="text-sm text-zinc-400 mt-1">{companyInfo.address}</p>
+                        <p className="text-sm text-zinc-400">{companyInfo.email}</p>
                       </div>
                       <div className="text-right">
-                        <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-600 via-green-600 to-cyan-600 bg-clip-text text-transparent">
+                        <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-green-400 to-cyan-400 bg-clip-text text-transparent">
                           INVOICE
                         </h2>
-                        <div className="mt-3 px-4 py-2 bg-gradient-to-r from-cyan-50 to-green-50 border border-cyan-200 rounded-lg">
-                          <p className="text-xs text-zinc-500">Invoice Number</p>
-                          <p className="text-sm font-bold text-cyan-700">
+                        <div className="mt-3 px-4 py-2 bg-gradient-to-r from-cyan-500/10 to-green-500/10 border border-cyan-500/30 rounded-lg">
+                          <p className="text-xs text-zinc-400">Invoice Number</p>
+                          <p className="text-sm font-bold text-cyan-300">
                             {invoiceData.invoiceNumber}
                           </p>
                         </div>
-                        <p className="text-sm text-zinc-600 mt-2">
+                        <p className="text-sm text-zinc-400 mt-2">
                           {format(new Date(invoiceData.date), "MMM dd, yyyy")}
                         </p>
                       </div>
@@ -807,47 +785,47 @@ const InvoiceEditor = () => {
                   </div>
 
                   {/* Bill To with Glow Effect */}
-                  <div className="p-4 bg-gradient-to-br from-cyan-50 to-green-50 border border-cyan-200 rounded-lg">
-                    <h4 className="text-xs font-semibold text-cyan-700 uppercase tracking-wider mb-2 flex items-center gap-2">
+                  <div className="p-4 bg-gradient-to-br from-cyan-500/5 to-green-500/5 border border-cyan-500/20 rounded-lg">
+                    <h4 className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-2">
                       <div className="w-1 h-4 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
                       Bill To
                     </h4>
-                    <p className="font-semibold text-zinc-900 text-lg">
+                    <p className="font-semibold text-white text-lg">
                       {invoiceData.clientName || "Client Name"}
                     </p>
                     {invoiceData.clientEmail && (
-                      <p className="text-sm text-zinc-600 mt-1">{invoiceData.clientEmail}</p>
+                      <p className="text-sm text-zinc-400 mt-1">{invoiceData.clientEmail}</p>
                     )}
                     {invoiceData.clientAddress && (
-                      <p className="text-sm text-zinc-600 whitespace-pre-line mt-1">
+                      <p className="text-sm text-zinc-400 whitespace-pre-line mt-1">
                         {invoiceData.clientAddress}
                       </p>
                     )}
                   </div>
 
                   {/* Introduction Text */}
-                  <div className="p-4 bg-gradient-to-br from-cyan-50 to-green-50 border-l-4 border-cyan-500 rounded-r-lg">
-                    <p className="text-sm text-zinc-700 italic leading-relaxed">
+                  <div className="p-4 bg-gradient-to-br from-cyan-500/5 to-green-500/5 border-l-4 border-cyan-500 rounded-r-lg">
+                    <p className="text-sm text-zinc-300 italic leading-relaxed">
                       Thank you for choosing Apply Wizz. Please find below the detailed breakdown of services and charges for your order:
                     </p>
                   </div>
 
                   {/* Futuristic Table */}
                   <div>
-                    <div className="border border-zinc-200 rounded-lg overflow-hidden bg-white">
+                    <div className="border border-cyan-500/20 rounded-lg overflow-hidden bg-zinc-900/50">
                       <table className="w-full">
-                        <thead className="bg-gradient-to-r from-cyan-50 to-green-50">
-                          <tr className="border-b border-zinc-200">
-                            <th className="px-4 py-3 text-left text-xs font-semibold text-cyan-700 uppercase tracking-wider">
+                        <thead className="bg-gradient-to-r from-cyan-500/10 to-green-500/10">
+                          <tr className="border-b border-cyan-500/20">
+                            <th className="px-4 py-3 text-left text-xs font-semibold text-cyan-300 uppercase tracking-wider">
                               Description
                             </th>
-                            <th className="px-4 py-3 text-right text-xs font-semibold text-cyan-700 uppercase tracking-wider w-16">
+                            <th className="px-4 py-3 text-right text-xs font-semibold text-cyan-300 uppercase tracking-wider w-16">
                               Qty
                             </th>
-                            <th className="px-4 py-3 text-right text-xs font-semibold text-cyan-700 uppercase tracking-wider w-24">
+                            <th className="px-4 py-3 text-right text-xs font-semibold text-cyan-300 uppercase tracking-wider w-24">
                               Rate
                             </th>
-                            <th className="px-4 py-3 text-right text-xs font-semibold text-cyan-700 uppercase tracking-wider w-28">
+                            <th className="px-4 py-3 text-right text-xs font-semibold text-cyan-300 uppercase tracking-wider w-28">
                               Amount
                             </th>
                           </tr>
@@ -855,19 +833,19 @@ const InvoiceEditor = () => {
                         <tbody>
                           {invoiceData.lineItems.map((item, index) => (
                             <tr key={item.id} className={cn(
-                              "border-b border-zinc-100",
-                              index % 2 === 0 ? "bg-zinc-50" : "bg-white"
+                              "border-b border-cyan-500/10",
+                              index % 2 === 0 ? "bg-zinc-900/30" : "bg-transparent"
                             )}>
-                              <td className="px-4 py-3 text-sm text-zinc-900">
+                              <td className="px-4 py-3 text-sm text-white">
                                 {item.description || "—"}
                               </td>
-                              <td className="px-4 py-3 text-right text-sm text-zinc-600">
+                              <td className="px-4 py-3 text-right text-sm text-zinc-400">
                                 {item.quantity}
                               </td>
-                              <td className="px-4 py-3 text-right text-sm text-zinc-600">
+                              <td className="px-4 py-3 text-right text-sm text-zinc-400">
                                 ${item.rate.toFixed(2)}
                               </td>
-                              <td className="px-4 py-3 text-right text-sm font-semibold text-cyan-700">
+                              <td className="px-4 py-3 text-right text-sm font-semibold text-cyan-300">
                                 ${(item.quantity * item.rate).toFixed(2)}
                               </td>
                             </tr>
@@ -879,34 +857,34 @@ const InvoiceEditor = () => {
 
                   {/* Totals with Gradient */}
                   <div className="flex justify-end">
-                    <div className="w-72 space-y-3 p-5 bg-gradient-to-br from-zinc-50 to-white border border-zinc-200 rounded-lg">
+                    <div className="w-72 space-y-3 p-5 bg-gradient-to-br from-zinc-900/90 to-zinc-900/50 border border-cyan-500/20 rounded-lg">
                       <div className="flex justify-between text-sm">
-                        <span className="text-zinc-600">Subtotal</span>
-                        <span className="font-medium text-zinc-900">
+                        <span className="text-zinc-400">Subtotal</span>
+                        <span className="font-medium text-white">
                           ${calculateSubtotal().toFixed(2)}
                         </span>
                       </div>
                       {invoiceData.tax > 0 && (
                         <div className="flex justify-between text-sm">
-                          <span className="text-zinc-600">Tax ({invoiceData.tax}%)</span>
-                          <span className="font-medium text-zinc-900">
+                          <span className="text-zinc-400">Tax ({invoiceData.tax}%)</span>
+                          <span className="font-medium text-white">
                             ${((calculateSubtotal() * invoiceData.tax) / 100).toFixed(2)}
                           </span>
                         </div>
                       )}
                       {invoiceData.discount > 0 && (
                         <div className="flex justify-between text-sm">
-                          <span className="text-zinc-600">
+                          <span className="text-zinc-400">
                             Discount ({invoiceData.discount}%)
                           </span>
-                          <span className="font-medium text-green-600">
+                          <span className="font-medium text-green-400">
                             -${((calculateSubtotal() * invoiceData.discount) / 100).toFixed(2)}
                           </span>
                         </div>
                       )}
-                      <div className="flex justify-between pt-3 border-t border-zinc-200">
-                        <span className="font-semibold text-zinc-900 text-lg">Total</span>
-                        <span className="text-2xl font-bold bg-gradient-to-r from-cyan-600 to-green-600 bg-clip-text text-transparent">
+                      <div className="flex justify-between pt-3 border-t border-cyan-500/30">
+                        <span className="font-semibold text-white text-lg">Total</span>
+                        <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
                           ${calculateTotal().toFixed(2)}
                         </span>
                       </div>
@@ -916,19 +894,19 @@ const InvoiceEditor = () => {
                   {/* Payment Details Section */}
                   {invoiceData.paymentLink && (
                     <div className="space-y-4">
-                      <div className="p-4 bg-gradient-to-br from-cyan-50 to-green-50 border border-cyan-200 rounded-lg">
-                        <h4 className="text-xs font-semibold text-cyan-700 uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <div className="p-4 bg-gradient-to-br from-cyan-500/5 to-green-500/5 border border-cyan-500/20 rounded-lg">
+                        <h4 className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-3 flex items-center gap-2">
                           <div className="w-1 h-4 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
                           Payment Details
                         </h4>
                         <div className="space-y-2">
                           <div className="flex items-start gap-2">
-                            <span className="text-sm text-zinc-600 font-medium">Payment Link:</span>
+                            <span className="text-sm text-zinc-400 font-medium">Payment Link:</span>
                             <a 
                               href={invoiceData.paymentLink} 
                               target="_blank" 
                               rel="noopener noreferrer" 
-                              className="text-sm text-cyan-600 hover:text-cyan-700 underline break-all"
+                              className="text-sm text-cyan-400 hover:text-cyan-300 underline break-all"
                             >
                               {invoiceData.paymentLink}
                             </a>
@@ -936,8 +914,8 @@ const InvoiceEditor = () => {
                         </div>
                       </div>
                       
-                      <div className="p-4 bg-gradient-to-br from-green-50 to-cyan-50 border-l-4 border-green-500 rounded-r-lg">
-                        <p className="text-sm text-zinc-700 italic leading-relaxed">
+                      <div className="p-4 bg-gradient-to-br from-green-500/5 to-cyan-500/5 border-l-4 border-green-500 rounded-r-lg">
+                        <p className="text-sm text-zinc-300 italic leading-relaxed">
                           The payment link is attached. Once payment is complete, please reply to this email to confirm so we can proceed with the work.
                         </p>
                       </div>
@@ -946,13 +924,13 @@ const InvoiceEditor = () => {
 
                   {/* Notes Section */}
                   {invoiceData.notes && (
-                    <div className="pt-6 border-t border-zinc-200">
-                      <div className="p-4 bg-gradient-to-br from-cyan-50 to-green-50 border border-cyan-200 rounded-lg">
-                        <h4 className="text-xs font-semibold text-cyan-700 uppercase tracking-wider mb-2 flex items-center gap-2">
+                    <div className="pt-6 border-t border-cyan-500/20">
+                      <div className="p-4 bg-gradient-to-br from-cyan-500/5 to-green-500/5 border border-cyan-500/20 rounded-lg">
+                        <h4 className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-2">
                           <div className="w-1 h-4 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
                           Notes
                         </h4>
-                        <p className="text-sm text-zinc-700 whitespace-pre-line">
+                        <p className="text-sm text-zinc-300 whitespace-pre-line">
                           {invoiceData.notes}
                         </p>
                       </div>
@@ -960,7 +938,7 @@ const InvoiceEditor = () => {
                   )}
 
                   {/* Footer */}
-                  <div className="pt-6 border-t border-zinc-200 text-center">
+                  <div className="pt-6 border-t border-cyan-500/20 text-center">
                     <p className="text-xs text-zinc-500">
                       Thank you for your business! • Powered by Apply Wizz
                     </p>
