@@ -933,8 +933,8 @@ const InvoiceEditor = () => {
                   {/* Bill To with Glow Effect */}
                   <div className="p-5 bg-zinc-900/50 border border-cyan-500/20 rounded-lg">
                     <div className="flex items-center gap-2.5 mb-3">
-                      <div className="w-1 h-6 bg-[#22d3ee] rounded-sm flex-shrink-0" />
-                      <h4 className="text-sm font-bold text-[#22d3ee] uppercase tracking-wider leading-none">
+                      <div className="w-1 h-6 bg-[#22d3ee] rounded-sm flex-shrink-0 self-center" />
+                      <h4 className="text-sm font-bold text-[#22d3ee] uppercase tracking-wider leading-6 m-0 p-0">
                         BILL TO
                       </h4>
                     </div>
@@ -1044,8 +1044,8 @@ const InvoiceEditor = () => {
                     <div className="space-y-4">
                       <div className="p-5 bg-zinc-900/50 border border-cyan-500/20 rounded-lg">
                         <div className="flex items-center gap-2.5 mb-3">
-                          <div className="w-1 h-6 bg-[#22d3ee] rounded-sm flex-shrink-0" />
-                          <h4 className="text-sm font-bold text-[#22d3ee] uppercase tracking-wider leading-none">
+                          <div className="w-1 h-6 bg-[#22d3ee] rounded-sm flex-shrink-0 self-center" />
+                          <h4 className="text-sm font-bold text-[#22d3ee] uppercase tracking-wider leading-6 m-0 p-0">
                             PAYMENT DETAILS
                           </h4>
                         </div>
