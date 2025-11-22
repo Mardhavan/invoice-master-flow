@@ -68,7 +68,7 @@ const Index = () => {
 
       {/* Hero Section */}
       <div className="relative z-10">
-        <div className="container mx-auto px-4 py-20">
+        <div className="container mx-auto px-4 py-10 sm:py-16 lg:py-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -80,12 +80,12 @@ const Index = () => {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-8 flex justify-center"
+              className="mb-6 sm:mb-8 flex justify-center"
             >
               <motion.img
                 src={applyWizzLogo}
                 alt="Apply Wizz Logo"
-                className="h-24 w-auto drop-shadow-[0_0_30px_rgba(34,211,238,0.4)]"
+                className="h-16 sm:h-20 lg:h-24 w-auto drop-shadow-[0_0_30px_rgba(34,211,238,0.4)]"
                 animate={{ 
                   filter: [
                     "drop-shadow(0 0 30px rgba(34,211,238,0.4))",
@@ -102,7 +102,7 @@ const Index = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-6xl md:text-7xl font-bold mb-6"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6"
             >
               <span className="bg-gradient-to-r from-cyan-400 via-green-400 to-cyan-400 bg-clip-text text-transparent">
                 Invoice Creator
@@ -114,7 +114,7 @@ const Index = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-xl md:text-2xl text-zinc-400 mb-12 max-w-2xl mx-auto"
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-zinc-400 mb-8 sm:mb-10 lg:mb-12 max-w-2xl mx-auto px-4"
             >
               Create stunning, professional invoices in seconds with our futuristic invoice system
             </motion.p>
@@ -124,26 +124,26 @@ const Index = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="flex gap-4 justify-center"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4"
             >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
                 <Button
                   size="lg"
                   onClick={() => navigate("/invoice?new=true")}
-                  className="bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white text-lg px-12 py-6 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:shadow-[0_0_50px_rgba(34,211,238,0.6)] transition-all duration-300"
+                  className="w-full sm:w-auto bg-gradient-to-r from-cyan-500 to-green-500 hover:from-cyan-600 hover:to-green-600 text-white text-base sm:text-lg px-8 sm:px-12 py-5 sm:py-6 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:shadow-[0_0_50px_rgba(34,211,238,0.6)] transition-all duration-300"
                 >
-                  <FiFileText className="mr-2 h-5 w-5" />
+                  <FiFileText className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   Create Invoice
                 </Button>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:w-auto">
                 <Button
                   size="lg"
                   onClick={() => navigate("/history")}
                   variant="outline"
-                  className="border-cyan-500/30 text-white hover:bg-cyan-500/10 text-lg px-12 py-6 rounded-full"
+                  className="w-full sm:w-auto border-cyan-500/30 text-white hover:bg-cyan-500/10 text-base sm:text-lg px-8 sm:px-12 py-5 sm:py-6 rounded-full"
                 >
-                  <FiClock className="mr-2 h-5 w-5" />
+                  <FiClock className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   View History
                 </Button>
               </motion.div>
@@ -155,7 +155,7 @@ const Index = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-24 max-w-6xl mx-auto"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-12 sm:mt-16 lg:mt-24 max-w-6xl mx-auto"
           >
             {features.map((feature, index) => (
               <motion.div
@@ -167,11 +167,11 @@ const Index = () => {
                 className="relative group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-green-500/10 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-                <div className="relative bg-zinc-900/80 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-6 hover:border-cyan-500/40 transition-all duration-300">
-                  <div className="w-12 h-12 bg-gradient-to-br from-cyan-500/20 to-green-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <feature.icon className="h-6 w-6 text-cyan-400" />
+                <div className="relative bg-zinc-900/80 backdrop-blur-xl border border-cyan-500/20 rounded-2xl p-4 sm:p-6 hover:border-cyan-500/40 transition-all duration-300">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-cyan-500/20 to-green-500/20 rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <feature.icon className="h-5 w-5 sm:h-6 sm:w-6 text-cyan-400" />
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-white mb-2">{feature.title}</h3>
                   <p className="text-sm text-zinc-400">{feature.description}</p>
                 </div>
               </motion.div>
@@ -183,9 +183,9 @@ const Index = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.2 }}
-            className="text-center mt-24"
+            className="text-center mt-12 sm:mt-16 lg:mt-24"
           >
-            <p className="text-zinc-500 text-sm mb-8">
+            <p className="text-zinc-500 text-xs sm:text-sm mb-8 px-4">
               Powered by Apply Wizz • The Future of Invoicing
             </p>
           </motion.div>
