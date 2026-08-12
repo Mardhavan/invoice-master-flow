@@ -336,7 +336,7 @@ const InvoiceEditor = () => {
     toast.success("Invoice saved successfully!");
   };
 
-  const generateInvoice = () => {
+  const generateInvoice = async () => {
     if (!invoiceData.clientName) {
       toast.error("Please add a client name");
       return;
@@ -351,29 +351,36 @@ const InvoiceEditor = () => {
       return;
     }
 
+    // Reserve a unique invoice number from the shared counter
+    const { data: reserved, error } = await supabase.rpc("reserve_invoice_number");
+
+    if (error || typeof reserved !== "number") {
+      toast.error("Could not reserve an invoice number. Please try again.");
+      return;
+    }
+
+    const finalData = { ...invoiceData, invoiceNumber: `INV-${reserved}` };
+    setInvoiceData(finalData);
+
     // Save to history automatically
     const saved = localStorage.getItem("invoiceHistory");
     const history = saved ? JSON.parse(saved) : [];
-    
+
     const invoice = {
       id: Date.now().toString(),
-      invoiceNumber: invoiceData.invoiceNumber,
-      clientName: invoiceData.clientName,
-      date: invoiceData.date,
+      invoiceNumber: finalData.invoiceNumber,
+      clientName: finalData.clientName,
+      date: finalData.date,
       total: calculateTotal(),
-      data: invoiceData
+      data: finalData
     };
 
     history.unshift(invoice);
     localStorage.setItem("invoiceHistory", JSON.stringify(history));
 
-    // Persist last used invoice number so the next one is unique
-    const currentNumber = parseInt(invoiceData.invoiceNumber.replace("INV-", "")) || 0;
-    localStorage.setItem("lastInvoiceNumber", currentNumber.toString());
-
     setIsGenerated(true);
     toast.success("Invoice generated and saved!");
-    
+
     // Scroll to top
     setTimeout(() => {
       window.scrollTo({ 
