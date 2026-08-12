@@ -78,7 +78,7 @@ const InvoiceEditor = () => {
   const companyInfo = {
     name: "APPLY WIZZ",
     address: "Telangana, India",
-    email: "hello@applywizz.com",
+    email: "support@applywizz.ai",
     logo: applyWizzLogo,
   };
 
@@ -320,7 +320,7 @@ const InvoiceEditor = () => {
 
   const generateInvoice = async () => {
     if (!invoiceData.invoiceNumber.trim()) {
-      toast.error("Please enter an AWL ID");
+      toast.error("Please enter an AWL");
       return;
     }
 
@@ -525,11 +525,11 @@ const InvoiceEditor = () => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <Label className="text-cyan-300">AWL ID</Label>
+                    <Label className="text-cyan-300">AWL</Label>
                     <Input
                       value={invoiceData.invoiceNumber}
                       onChange={(e) => setInvoiceData({ ...invoiceData, invoiceNumber: e.target.value })}
-                      placeholder="Enter AWL ID"
+                      placeholder="Enter AWL"
                       className="mt-1.5 bg-zinc-800/50 border-cyan-500/30 text-white"
                     />
                   </div>
@@ -920,7 +920,7 @@ const InvoiceEditor = () => {
                           INVOICE
                         </h2>
                         <div className="px-3 sm:px-4 lg:px-5 py-3 sm:py-4 bg-zinc-900/80 border border-cyan-500/30 rounded-lg">
-                          <p className="text-[10px] sm:text-xs text-zinc-400 mb-1.5 sm:mb-2 leading-none">AWL ID</p>
+                          <p className="text-[10px] sm:text-xs text-zinc-400 mb-1.5 sm:mb-2 leading-none">AWL</p>
                           <p className="text-sm sm:text-base lg:text-lg font-bold text-[#22d3ee] leading-none">
                             {invoiceData.invoiceNumber}
                           </p>
