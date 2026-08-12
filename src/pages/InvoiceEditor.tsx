@@ -16,6 +16,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import applyWizzLogo from "@/assets/applywizz-logo.png";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 
 interface LineItem {
   id: string;
@@ -42,14 +43,8 @@ const InvoiceEditor = () => {
   const [searchParams] = useSearchParams();
   const [isGenerated, setIsGenerated] = useState(false);
   
-  const getNextInvoiceNumber = () => {
-    const lastNumber = localStorage.getItem("lastInvoiceNumber");
-    const nextNumber = lastNumber ? parseInt(lastNumber) + 1 : 1001;
-    return `INV-${nextNumber}`;
-  };
-
   const getInitialData = (): InvoiceData => ({
-    invoiceNumber: getNextInvoiceNumber(),
+    invoiceNumber: "INV-…",
     clientName: "",
     clientEmail: "",
     clientAddress: "",
@@ -65,17 +60,31 @@ const InvoiceEditor = () => {
 
   useEffect(() => {
     const isNewInvoice = searchParams.get("new") === "true";
-    
+
     if (isNewInvoice) {
-      // Clear localStorage and reset to fresh state
+      // Clear local draft and start fresh with the shared invoice number
       localStorage.removeItem("currentInvoiceData");
       setInvoiceData(getInitialData());
       setIsGenerated(false);
+
+      supabase.rpc("peek_invoice_number").then(({ data, error }) => {
+        if (error || typeof data !== "number") {
+          toast.error("Could not load the shared invoice number");
+          return;
+        }
+        setInvoiceData((prev) => ({ ...prev, invoiceNumber: `INV-${data}` }));
+      });
     } else {
       // Load saved data if available
       const saved = localStorage.getItem("currentInvoiceData");
       if (saved) {
         setInvoiceData(JSON.parse(saved));
+      } else {
+        supabase.rpc("peek_invoice_number").then(({ data }) => {
+          if (typeof data === "number") {
+            setInvoiceData((prev) => ({ ...prev, invoiceNumber: `INV-${data}` }));
+          }
+        });
       }
     }
   }, [searchParams]);
@@ -327,7 +336,7 @@ const InvoiceEditor = () => {
     toast.success("Invoice saved successfully!");
   };
 
-  const generateInvoice = () => {
+  const generateInvoice = async () => {
     if (!invoiceData.clientName) {
       toast.error("Please add a client name");
       return;
@@ -342,29 +351,36 @@ const InvoiceEditor = () => {
       return;
     }
 
+    // Reserve a unique invoice number from the shared counter
+    const { data: reserved, error } = await supabase.rpc("reserve_invoice_number");
+
+    if (error || typeof reserved !== "number") {
+      toast.error("Could not reserve an invoice number. Please try again.");
+      return;
+    }
+
+    const finalData = { ...invoiceData, invoiceNumber: `INV-${reserved}` };
+    setInvoiceData(finalData);
+
     // Save to history automatically
     const saved = localStorage.getItem("invoiceHistory");
     const history = saved ? JSON.parse(saved) : [];
-    
+
     const invoice = {
       id: Date.now().toString(),
-      invoiceNumber: invoiceData.invoiceNumber,
-      clientName: invoiceData.clientName,
-      date: invoiceData.date,
+      invoiceNumber: finalData.invoiceNumber,
+      clientName: finalData.clientName,
+      date: finalData.date,
       total: calculateTotal(),
-      data: invoiceData
+      data: finalData
     };
 
     history.unshift(invoice);
     localStorage.setItem("invoiceHistory", JSON.stringify(history));
 
-    // Persist last used invoice number so the next one is unique
-    const currentNumber = parseInt(invoiceData.invoiceNumber.replace("INV-", "")) || 0;
-    localStorage.setItem("lastInvoiceNumber", currentNumber.toString());
-
     setIsGenerated(true);
     toast.success("Invoice generated and saved!");
-    
+
     // Scroll to top
     setTimeout(() => {
       window.scrollTo({ 
