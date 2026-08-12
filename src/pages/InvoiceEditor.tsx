@@ -1038,35 +1038,6 @@ const InvoiceEditor = () => {
                     </div>
                   </div>
 
-                  {/* Payment Details Section */}
-                  {invoiceData.paymentLink && (
-                    <div className="space-y-3 sm:space-y-4">
-                      <div className="p-3 sm:p-4 lg:p-5 bg-zinc-900/50 border border-cyan-500/20 rounded-lg">
-                        <h4 className="text-xs sm:text-sm font-bold text-[#22d3ee] uppercase tracking-wider mb-2 sm:mb-3">
-                          • PAYMENT DETAILS
-                        </h4>
-                        <div className="space-y-2">
-                          <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
-                            <span className="text-xs sm:text-sm text-zinc-400 font-medium whitespace-nowrap">Payment Link:</span>
-                            <a 
-                              href={invoiceData.paymentLink} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              className="text-xs sm:text-sm text-cyan-400 hover:text-cyan-300 underline break-all"
-                            >
-                              {invoiceData.paymentLink}
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="p-3 sm:p-4 bg-gradient-to-br from-green-500/5 to-cyan-500/5 border-l-2 sm:border-l-4 border-green-500 rounded-r-lg">
-                        <p className="text-xs sm:text-sm text-zinc-300 italic leading-relaxed">
-                          The payment link is attached. Once payment is complete, please reply to this email to confirm so we can proceed with the work.
-                        </p>
-                      </div>
-                    </div>
-                  )}
 
                   {/* Notes Section */}
                   {invoiceData.notes && (
