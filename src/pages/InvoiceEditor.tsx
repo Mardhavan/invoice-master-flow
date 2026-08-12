@@ -51,7 +51,6 @@ const InvoiceEditor = () => {
     discount: 0,
     date: new Date().toISOString().split("T")[0],
     notes: "",
-    paymentLink: "",
   });
 
   const [invoiceData, setInvoiceData] = useState<InvoiceData>(getInitialData());
