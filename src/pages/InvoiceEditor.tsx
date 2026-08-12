@@ -322,6 +322,11 @@ const InvoiceEditor = () => {
   };
 
   const generateInvoice = async () => {
+    if (!invoiceData.invoiceNumber.trim()) {
+      toast.error("Please enter an AWL ID");
+      return;
+    }
+
     if (!invoiceData.clientName) {
       toast.error("Please add a client name");
       return;
@@ -336,16 +341,9 @@ const InvoiceEditor = () => {
       return;
     }
 
-    // Reserve a unique invoice number from the shared counter
-    const { data: reserved, error } = await supabase.rpc("reserve_invoice_number");
-
-    if (error || typeof reserved !== "number") {
-      toast.error("Could not reserve an invoice number. Please try again.");
-      return;
-    }
-
-    const finalData = { ...invoiceData, invoiceNumber: `INV-${reserved}` };
+    const finalData = { ...invoiceData, invoiceNumber: invoiceData.invoiceNumber.trim() };
     setInvoiceData(finalData);
+
 
     // Save to history automatically
     const saved = localStorage.getItem("invoiceHistory");
