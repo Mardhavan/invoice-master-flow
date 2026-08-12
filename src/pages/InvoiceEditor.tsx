@@ -16,7 +16,6 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import applyWizzLogo from "@/assets/applywizz-logo.png";
 import { cn } from "@/lib/utils";
-import { supabase } from "@/integrations/supabase/client";
 
 interface LineItem {
   id: string;
@@ -44,7 +43,7 @@ const InvoiceEditor = () => {
   const [isGenerated, setIsGenerated] = useState(false);
   
   const getInitialData = (): InvoiceData => ({
-    invoiceNumber: "INV-…",
+    invoiceNumber: "",
     clientName: "",
     clientEmail: "",
     clientAddress: "",
@@ -62,32 +61,17 @@ const InvoiceEditor = () => {
     const isNewInvoice = searchParams.get("new") === "true";
 
     if (isNewInvoice) {
-      // Clear local draft and start fresh with the shared invoice number
       localStorage.removeItem("currentInvoiceData");
       setInvoiceData(getInitialData());
       setIsGenerated(false);
-
-      supabase.rpc("peek_invoice_number").then(({ data, error }) => {
-        if (error || typeof data !== "number") {
-          toast.error("Could not load the shared invoice number");
-          return;
-        }
-        setInvoiceData((prev) => ({ ...prev, invoiceNumber: `INV-${data}` }));
-      });
     } else {
-      // Load saved data if available
       const saved = localStorage.getItem("currentInvoiceData");
       if (saved) {
         setInvoiceData(JSON.parse(saved));
-      } else {
-        supabase.rpc("peek_invoice_number").then(({ data }) => {
-          if (typeof data === "number") {
-            setInvoiceData((prev) => ({ ...prev, invoiceNumber: `INV-${data}` }));
-          }
-        });
       }
     }
   }, [searchParams]);
+
 
   useEffect(() => {
     localStorage.setItem("currentInvoiceData", JSON.stringify(invoiceData));
@@ -337,6 +321,11 @@ const InvoiceEditor = () => {
   };
 
   const generateInvoice = async () => {
+    if (!invoiceData.invoiceNumber.trim()) {
+      toast.error("Please enter an AWL ID");
+      return;
+    }
+
     if (!invoiceData.clientName) {
       toast.error("Please add a client name");
       return;
@@ -351,16 +340,9 @@ const InvoiceEditor = () => {
       return;
     }
 
-    // Reserve a unique invoice number from the shared counter
-    const { data: reserved, error } = await supabase.rpc("reserve_invoice_number");
-
-    if (error || typeof reserved !== "number") {
-      toast.error("Could not reserve an invoice number. Please try again.");
-      return;
-    }
-
-    const finalData = { ...invoiceData, invoiceNumber: `INV-${reserved}` };
+    const finalData = { ...invoiceData, invoiceNumber: invoiceData.invoiceNumber.trim() };
     setInvoiceData(finalData);
+
 
     // Save to history automatically
     const saved = localStorage.getItem("invoiceHistory");
@@ -545,13 +527,15 @@ const InvoiceEditor = () => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <Label className="text-cyan-300">Invoice Number</Label>
+                    <Label className="text-cyan-300">AWL ID</Label>
                     <Input
                       value={invoiceData.invoiceNumber}
-                      disabled
+                      onChange={(e) => setInvoiceData({ ...invoiceData, invoiceNumber: e.target.value })}
+                      placeholder="Enter AWL ID"
                       className="mt-1.5 bg-zinc-800/50 border-cyan-500/30 text-white"
                     />
                   </div>
+
                   <div>
                     <Label className="text-cyan-300">Invoice Date</Label>
                     <Popover>
@@ -961,7 +945,7 @@ const InvoiceEditor = () => {
                           INVOICE
                         </h2>
                         <div className="px-3 sm:px-4 lg:px-5 py-3 sm:py-4 bg-zinc-900/80 border border-cyan-500/30 rounded-lg">
-                          <p className="text-[10px] sm:text-xs text-zinc-400 mb-1.5 sm:mb-2 leading-none">Invoice Number</p>
+                          <p className="text-[10px] sm:text-xs text-zinc-400 mb-1.5 sm:mb-2 leading-none">AWL ID</p>
                           <p className="text-sm sm:text-base lg:text-lg font-bold text-[#22d3ee] leading-none">
                             {invoiceData.invoiceNumber}
                           </p>
