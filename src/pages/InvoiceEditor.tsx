@@ -946,7 +946,7 @@ const InvoiceEditor = () => {
                           INVOICE
                         </h2>
                         <div className="px-3 sm:px-4 lg:px-5 py-3 sm:py-4 bg-zinc-900/80 border border-cyan-500/30 rounded-lg">
-                          <p className="text-[10px] sm:text-xs text-zinc-400 mb-1.5 sm:mb-2 leading-none">Invoice Number</p>
+                          <p className="text-[10px] sm:text-xs text-zinc-400 mb-1.5 sm:mb-2 leading-none">AWL ID</p>
                           <p className="text-sm sm:text-base lg:text-lg font-bold text-[#22d3ee] leading-none">
                             {invoiceData.invoiceNumber}
                           </p>
