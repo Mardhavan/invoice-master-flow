@@ -750,29 +750,6 @@ const InvoiceEditor = () => {
               </Card>
             </motion.div>
 
-            {/* Payment Link */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-4 sm:p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
-                <div className="flex items-center gap-2 mb-3 sm:mb-4">
-                  <div className="h-6 sm:h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
-                  <h2 className="text-base sm:text-lg font-semibold text-white">Payment Information</h2>
-                </div>
-                <div>
-                  <Label className="text-cyan-300">Payment Link</Label>
-                  <Input
-                    value={invoiceData.paymentLink}
-                    onChange={(e) => setInvoiceData({ ...invoiceData, paymentLink: e.target.value })}
-                    placeholder="https://payment.example.com/your-link"
-                    className="mt-1.5 bg-zinc-800/50 border-cyan-500/30 text-white placeholder:text-zinc-500 focus:border-cyan-500/70"
-                  />
-                </div>
-              </Card>
-            </motion.div>
-
             {/* Notes */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
