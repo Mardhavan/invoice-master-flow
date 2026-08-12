@@ -34,7 +34,6 @@ interface InvoiceData {
   discount: number;
   date: string;
   notes: string;
-  paymentLink: string;
 }
 
 const InvoiceEditor = () => {
@@ -52,7 +51,6 @@ const InvoiceEditor = () => {
     discount: 0,
     date: new Date().toISOString().split("T")[0],
     notes: "",
-    paymentLink: "",
   });
 
   const [invoiceData, setInvoiceData] = useState<InvoiceData>(getInitialData());
@@ -752,29 +750,6 @@ const InvoiceEditor = () => {
               </Card>
             </motion.div>
 
-            {/* Payment Link */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <Card className="bg-zinc-900/80 backdrop-blur-xl border-cyan-500/20 p-4 sm:p-6 shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.2)] transition-all">
-                <div className="flex items-center gap-2 mb-3 sm:mb-4">
-                  <div className="h-6 sm:h-8 w-1 bg-gradient-to-b from-cyan-500 to-green-500 rounded-full" />
-                  <h2 className="text-base sm:text-lg font-semibold text-white">Payment Information</h2>
-                </div>
-                <div>
-                  <Label className="text-cyan-300">Payment Link</Label>
-                  <Input
-                    value={invoiceData.paymentLink}
-                    onChange={(e) => setInvoiceData({ ...invoiceData, paymentLink: e.target.value })}
-                    placeholder="https://payment.example.com/your-link"
-                    className="mt-1.5 bg-zinc-800/50 border-cyan-500/30 text-white placeholder:text-zinc-500 focus:border-cyan-500/70"
-                  />
-                </div>
-              </Card>
-            </motion.div>
-
             {/* Notes */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -1063,35 +1038,6 @@ const InvoiceEditor = () => {
                     </div>
                   </div>
 
-                  {/* Payment Details Section */}
-                  {invoiceData.paymentLink && (
-                    <div className="space-y-3 sm:space-y-4">
-                      <div className="p-3 sm:p-4 lg:p-5 bg-zinc-900/50 border border-cyan-500/20 rounded-lg">
-                        <h4 className="text-xs sm:text-sm font-bold text-[#22d3ee] uppercase tracking-wider mb-2 sm:mb-3">
-                          • PAYMENT DETAILS
-                        </h4>
-                        <div className="space-y-2">
-                          <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2">
-                            <span className="text-xs sm:text-sm text-zinc-400 font-medium whitespace-nowrap">Payment Link:</span>
-                            <a 
-                              href={invoiceData.paymentLink} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              className="text-xs sm:text-sm text-cyan-400 hover:text-cyan-300 underline break-all"
-                            >
-                              {invoiceData.paymentLink}
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="p-3 sm:p-4 bg-gradient-to-br from-green-500/5 to-cyan-500/5 border-l-2 sm:border-l-4 border-green-500 rounded-r-lg">
-                        <p className="text-xs sm:text-sm text-zinc-300 italic leading-relaxed">
-                          The payment link is attached. Once payment is complete, please reply to this email to confirm so we can proceed with the work.
-                        </p>
-                      </div>
-                    </div>
-                  )}
 
                   {/* Notes Section */}
                   {invoiceData.notes && (
