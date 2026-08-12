@@ -16,7 +16,6 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import applyWizzLogo from "@/assets/applywizz-logo.png";
 import { cn } from "@/lib/utils";
-import { supabase } from "@/integrations/supabase/client";
 
 interface LineItem {
   id: string;
