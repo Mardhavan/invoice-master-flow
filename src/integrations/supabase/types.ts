@@ -14,13 +14,31 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      invoice_counter: {
+        Row: {
+          id: number
+          last_number: number
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          last_number?: number
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          last_number?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      peek_invoice_number: { Args: never; Returns: number }
+      reserve_invoice_number: { Args: never; Returns: number }
     }
     Enums: {
       [_ in never]: never
