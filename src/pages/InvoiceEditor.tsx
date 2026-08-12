@@ -34,7 +34,6 @@ interface InvoiceData {
   discount: number;
   date: string;
   notes: string;
-  paymentLink: string;
 }
 
 const InvoiceEditor = () => {
