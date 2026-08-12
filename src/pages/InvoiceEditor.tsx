@@ -44,7 +44,7 @@ const InvoiceEditor = () => {
   const [isGenerated, setIsGenerated] = useState(false);
   
   const getInitialData = (): InvoiceData => ({
-    invoiceNumber: "INV-…",
+    invoiceNumber: "",
     clientName: "",
     clientEmail: "",
     clientAddress: "",
@@ -62,32 +62,17 @@ const InvoiceEditor = () => {
     const isNewInvoice = searchParams.get("new") === "true";
 
     if (isNewInvoice) {
-      // Clear local draft and start fresh with the shared invoice number
       localStorage.removeItem("currentInvoiceData");
       setInvoiceData(getInitialData());
       setIsGenerated(false);
-
-      supabase.rpc("peek_invoice_number").then(({ data, error }) => {
-        if (error || typeof data !== "number") {
-          toast.error("Could not load the shared invoice number");
-          return;
-        }
-        setInvoiceData((prev) => ({ ...prev, invoiceNumber: `INV-${data}` }));
-      });
     } else {
-      // Load saved data if available
       const saved = localStorage.getItem("currentInvoiceData");
       if (saved) {
         setInvoiceData(JSON.parse(saved));
-      } else {
-        supabase.rpc("peek_invoice_number").then(({ data }) => {
-          if (typeof data === "number") {
-            setInvoiceData((prev) => ({ ...prev, invoiceNumber: `INV-${data}` }));
-          }
-        });
       }
     }
   }, [searchParams]);
+
 
   useEffect(() => {
     localStorage.setItem("currentInvoiceData", JSON.stringify(invoiceData));
