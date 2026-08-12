@@ -528,13 +528,15 @@ const InvoiceEditor = () => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
-                    <Label className="text-cyan-300">Invoice Number</Label>
+                    <Label className="text-cyan-300">AWL ID</Label>
                     <Input
                       value={invoiceData.invoiceNumber}
-                      disabled
+                      onChange={(e) => setInvoiceData({ ...invoiceData, invoiceNumber: e.target.value })}
+                      placeholder="Enter AWL ID"
                       className="mt-1.5 bg-zinc-800/50 border-cyan-500/30 text-white"
                     />
                   </div>
+
                   <div>
                     <Label className="text-cyan-300">Invoice Date</Label>
                     <Popover>
